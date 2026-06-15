@@ -677,30 +677,109 @@
         height: 100%;
         border: 0;
       }
+      /* Affiliations: two labelled groups stacked under the hero CTA —
+         "Backed by" (programs/incubators) and "Deployment partners". */
+      .hero__affiliations {
+        margin: 2.75rem 0 0.75rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.85rem;
+      }
+      .partner-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.95rem;
+        width: 100%;
+      }
+      .partner-group__label {
+        margin: 0;
+        font-family: var(--font-head);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--c-muted);
+      }
       .hero__partners {
         display: flex;
         flex-wrap: wrap;
-        gap: 1.75rem;
+        gap: 1.4rem 1.5rem;
         align-items: center;
         justify-content: center;
-        margin: 2.75rem 0 0.75rem;
+        margin: 0;
+      }
+      /* Partner marks are links. They sit slightly muted/desaturated at rest and
+         pop to full colour, lift, and cast a soft shadow on hover/focus so it's
+         obvious they're clickable. Opacity + saturation changes apply to everyone;
+         the lift/scale is gated behind prefers-reduced-motion. */
+      .hero__partners a {
+        display: inline-flex;
+        border-radius: 8px;
+        opacity: 0.8;
+        filter: saturate(0.85);
+        transition: opacity 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+      }
+      .hero__partners a:hover,
+      .hero__partners a:focus-visible {
+        opacity: 1;
+        filter: saturate(1) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .hero__partners a:hover,
+        .hero__partners a:focus-visible {
+          transform: translateY(-4px) scale(1.05);
+        }
       }
       .hero__partners img {
         width: auto;
-        opacity: 0.92;
+        display: block;
       }
       /* Optically balanced sizing: FEL has more internal whitespace than the
-         MotionLab mark, so it's set taller to read at the same visual weight. */
+         MotionLab mark, so it's set taller to read at the same visual weight.
+         OVHcloud and Komm:Transform are wide horizontal lockups, so they're set
+         shorter to keep their on-screen width in line with the other marks. */
       .partner--motionlab {
-        height: 3rem;
+        height: 2.75rem;
       }
       .partner--fel {
-        height: 4.25rem;
+        height: 3.75rem;
+      }
+      .partner--ovh {
+        height: 2.5rem;
+      }
+      .partner--komm {
+        height: 1.6rem;
+      }
+      /* Onshape ships as a self-contained dark badge (not a transparent mark),
+         and it's near-square, so it carries more visual weight per unit height
+         than the wordmarks. Set a touch smaller and give it rounded corners so
+         it reads as an intentional badge rather than a stray dark block. */
+      .partner--onshape {
+        height: 3rem;
+        border-radius: 8px;
+      }
+      .partner--ciee {
+        height: 2.25rem;
+      }
+      /* Deployment partners */
+      .partner--deepgreen {
+        height: 2.4rem;
+      }
+      .partner--leafcloud {
+        height: 1.5rem;
+      }
+      .partner--heata {
+        height: 1.6rem;
       }
       .hero__caption {
         text-align: center;
-        max-width: 40ch;
+        /* Wide enough to keep the first sentence on one line; text-wrap:balance
+           then evens the two lines so the second sentence doesn't orphan. */
+        max-width: 50ch;
         margin: 0 auto;
+        text-wrap: balance;
       }
 
       /* ===================================================================
@@ -1159,23 +1238,136 @@
             <a class="btn btn--ghost" href="#problem">Explore the story</a>
           </div>
 
-          <div class="hero__partners reveal">
-            <img
-              class="partner--motionlab"
-              src="assets/images/logo-motionlab.png?v=e1d5cfd8"
-              alt="MotionLab Berlin"
-              width="360"
-              height="122"
-            />
-            <img
-              class="partner--fel"
-              src="assets/images/logo-future-energy-labs.png"
-              alt="Future Energy Labs"
-              width="6626"
-              height="3258"
-            />
+          <div class="hero__affiliations reveal">
+          <div class="partner-group" role="group" aria-labelledby="partner-group-backed">
+          <p id="partner-group-backed" class="partner-group__label">Backed by</p>
+          <div class="hero__partners">
+            <a
+              href="https://startup.ovhcloud.com/en/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--ovh"
+                src="assets/images/logo-ovhcloud-startup.svg"
+                alt="OVHcloud Startup Program"
+                width="550"
+                height="87"
+              />
+            </a>
+            <a
+              href="https://www.onshape.com/en/startups/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--onshape"
+                src="assets/images/logo-onshape-startup.png"
+                alt="Onshape Startup Program by PTC"
+                width="1328"
+                height="814"
+              />
+            </a>
+            <a
+              href="https://motionlab.berlin/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--motionlab"
+                src="assets/images/logo-motionlab.png?v=e1d5cfd8"
+                alt="MotionLab Berlin"
+                width="360"
+                height="122"
+              />
+            </a>
+            <a
+              href="https://future-energy-lab.de/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--fel"
+                src="assets/images/logo-future-energy-labs.png"
+                alt="Future Energy Lab"
+                width="6626"
+                height="3258"
+              />
+            </a>
+            <a
+              href="https://www.kommtransform.de/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--komm"
+                src="assets/images/logo-komm-transform.png"
+                alt="Komm:Transform"
+                width="3743"
+                height="326"
+              />
+            </a>
+            <a
+              href="https://www.ciee.org/go-abroad/college-study-abroad/locations/germany/berlin"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--ciee"
+                src="assets/images/logo-ciee.png"
+                alt="CIEE Berlin"
+                width="360"
+                height="143"
+              />
+            </a>
           </div>
-          <p id="text37" class="caption hero__caption">MotionLab Berlin hardtech accelerator graduates. Based at Future Energy Labs (dena, Berlin).</p>
+          </div>
+          <div class="partner-group" role="group" aria-labelledby="partner-group-deploy">
+          <p id="partner-group-deploy" class="partner-group__label">Deployment partners</p>
+          <div class="hero__partners">
+            <a
+              href="https://www.deepgreen.energy/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--deepgreen"
+                src="assets/images/logo-deepgreen.png"
+                alt="Deep Green"
+                width="1000"
+                height="416"
+              />
+            </a>
+            <a
+              href="https://www.leaf.cloud/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--leafcloud"
+                src="assets/images/logo-leafcloud.svg"
+                alt="Leafcloud"
+                width="793"
+                height="109"
+              />
+            </a>
+            <a
+              href="https://www.heata.co/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--heata"
+                src="assets/images/logo-heata.svg"
+                alt="Heata"
+                width="136"
+                height="36"
+              />
+            </a>
+          </div>
+          </div>
+          </div>
+          <p id="text37" class="caption hero__caption">MotionLab Berlin hardtech accelerator graduates. Based at Future Energy Lab (dena, Berlin).</p>
         </div>
       </section>
       <section id="problem" class="section" tabindex="-1" aria-labelledby="text16">
