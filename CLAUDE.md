@@ -5,6 +5,20 @@ exported from Carrd; that machine-generated substrate (the `.instance-N` classes
 `display:none` slide-switcher state machine) has since been **retired**. The site is now a
 hand-authored **continuous-scroll** page maintained via a content pipeline.
 
+<!-- fluxtech-meta:cross-repo-access BEGIN (generated — run `make sync` in fluxtech-meta) -->
+
+## Cross-Repo Access
+
+These repos are interconnected — packages (`co2-eos`, `fluxstyle`), the consumers
+built on them, and `Physics Spec` as the shared physics source of truth (the family
+`CLAUDE.md` at the repo-family root has the full map). When a task here consumes
+from or feeds another repo, **reading that repo's files directly is natural and
+encouraged** — work from the real source, not a remembered or copied version.
+**Editing a file outside this repo is forbidden without explicit permission for that
+change.** Read freely across the family; write only here.
+
+<!-- fluxtech-meta:cross-repo-access END -->
+
 ## Architecture
 
 ```
