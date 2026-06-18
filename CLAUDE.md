@@ -19,6 +19,26 @@ change.** Read freely across the family; write only here.
 
 <!-- fluxtech-meta:cross-repo-access END -->
 
+<!-- fluxtech-meta:consuming-packages BEGIN (generated — run `make sync` in fluxtech-meta) -->
+
+## Consuming Packages
+
+This repo consumes shared packages; it does not vendor or re-type their contents.
+Import the package's published surface — or its generated artifact, e.g. the physics
+spec's `reference_operating_point.json` — rather than copying numbers, hexes, or
+formulas into this repo, where they would drift from canonical. When you need a
+package's value or behavior, read the package's own source as the authority. A need
+that seems to require editing a package is lifted into the package, not patched here.
+
+<!-- fluxtech-meta:consuming-packages END -->
+
+<!-- fluxtech-meta:consuming-packages LOCAL (repo-specific; hand-authored; kept across syncs) -->
+**In this repo.** The brand palette and fonts are `fluxstyle`'s tokens
+(`brand/tokens.css`). The `:root` custom properties in `sections/head.html` mirror
+them — when the brand moves, reconcile against fluxstyle's source rather than
+hand-tuning hexes here.
+<!-- fluxtech-meta:consuming-packages LOCAL END -->
+
 ## Architecture
 
 ```
