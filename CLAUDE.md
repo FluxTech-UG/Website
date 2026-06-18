@@ -39,6 +39,42 @@ them — when the brand moves, reconcile against fluxstyle's source rather than
 hand-tuning hexes here.
 <!-- fluxtech-meta:consuming-packages LOCAL END -->
 
+<!-- fluxtech-meta:fail-fast BEGIN (generated — run `make sync` in fluxtech-meta) -->
+
+## Fail Fast
+
+No silent defaults; no caught exceptions that substitute a fallback value. A missing
+config field, an unphysical state, a failed inversion, a conservation or consistency
+violation beyond tolerance — raise immediately, with context. When a real value
+should exist, never paper over its absence with a default.
+
+<!-- fluxtech-meta:fail-fast END -->
+
+<!-- fluxtech-meta:living-documents BEGIN (generated — run `make sync` in fluxtech-meta) -->
+
+## Living Documents — No Archaeology
+
+Every file states only the current state. When an approach changes, rewrite the
+affected passage with the new result and delete what it replaced — git holds the
+history. This holds for instructions and framing as much as for outputs: say what
+the architecture *is*, not what it replaced. Never leave negative framing ("unlike
+the previous approach", "no longer …"): a retired claim left in the text plants a
+competing attractor a later reader may draw from. The one exception is a prior
+approach that is the model's likely default from training — a standard pattern it
+would reach for unprompted; there, an explicit override is worth stating.
+
+<!-- fluxtech-meta:living-documents END -->
+
+<!-- fluxtech-meta:no-redundant-cd BEGIN (generated — run `make sync` in fluxtech-meta) -->
+
+## No Redundant cd
+
+Commands run from the repo root; you are already there. Run them directly
+(`python scripts/run.py`), never `cd /path && …`. A leading `cd` into the repo you
+are already in is noise and can trip the permission prompt.
+
+<!-- fluxtech-meta:no-redundant-cd END -->
+
 ## Architecture
 
 ```
