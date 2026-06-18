@@ -1,0 +1,8 @@
+# Build-time dependencies for `python build.py` (the site itself is static HTML;
+# nothing here ships to GitHub Pages).
+PyYAML>=6.0
+
+# fluxstyle — brand tokens, web-font request, and logo SVGs, pulled at build time.
+# Private package; install editable from the sibling repo. Run from this directory:
+#   pip install -e ../../fluxstyle
+--editable ../../fluxstyle

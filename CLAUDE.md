@@ -33,10 +33,14 @@ that seems to require editing a package is lifted into the package, not patched 
 <!-- fluxtech-meta:consuming-packages END -->
 
 <!-- fluxtech-meta:consuming-packages LOCAL (repo-specific; hand-authored; kept across syncs) -->
-**In this repo.** The brand palette and fonts are `fluxstyle`'s tokens
-(`brand/tokens.css`). The `:root` custom properties in `sections/head.html` mirror
-them — when the brand moves, reconcile against fluxstyle's source rather than
-hand-tuning hexes here.
+**In this repo.** `build.py` pulls the brand surface from `fluxstyle` at build
+time: the brand-core `:root` tokens (`fluxstyle.brand_css()`, injected at the
+`/* fluxstyle:brand-tokens */` marker in `sections/head.html`), the web-font
+`<link>` (`fluxstyle.font_link_tag()`, at the `<!-- fluxstyle:font-link -->`
+marker), and the three logo SVGs (`fluxstyle.logo_path()` → `assets/images/`).
+Don't hand-edit any of those — change the brand in `fluxstyle` and rebuild. Only
+site-layout tokens (`--maxw`, `--header-h`, `--radius`, `--shadow`, `--measure`)
+stay local. Build needs fluxstyle installed: `pip install -e ../../fluxstyle`.
 <!-- fluxtech-meta:consuming-packages LOCAL END -->
 
 <!-- fluxtech-meta:fail-fast BEGIN (generated — run `make sync` in fluxtech-meta) -->
@@ -200,14 +204,17 @@ python build.py --check      # Dry run: validate YAML keys match template placeh
 ## Conventions
 
 - Fonts: Poppins (headings, gradient text, nav, numbers) and Source Code Pro (body).
-- Brand palette: teal-to-green gradient (`#007FAD` → `#009A62`), body text `#1A1D21`,
-  highlight background `#CBF5E6`. CSS custom properties for these live in `:root` in `head.html`.
+- Brand palette and type tokens come from `fluxstyle` (`brand/tokens.css`), injected into
+  `head.html`'s `<style>` at build time as the brand `:root` — never hand-typed here. The
+  teal-to-green gradient, ink, highlight, and the Poppins/Source Code Pro stacks all live
+  there; this repo adds only site-layout tokens and the `var(--c-*)` references that use them.
 - Section headings (`.h-section`) and the hero tagline use Poppins with a `background-clip:text`
   gradient fill. Body text (`.prose`) uses Source Code Pro.
 - All images live in `assets/images/` with descriptive kebab-case names. Every `<img>` carries
   explicit `width`/`height` (intrinsic pixels) so reveals and late media don't cause layout
   shift (CLS).
-- **Logo** — centralized as three transparent SVGs derived from one master lockup
+- **Logo** — three transparent SVGs single-sourced in `fluxstyle` and copied into
+  `assets/images/` by `build.py` (`fluxstyle.logo_path()`); derived from one master lockup
   (gradient icon over wordmark):
   - `logo-fluxtech.svg` — full stacked lockup → **hero**.
   - `logo-fluxtech-icon.svg` — gradient icon only → **header** mark, **Ask** mark, **favicon**.

@@ -12,8 +12,12 @@ Usage:
 
 import os
 import re
+import shutil
 import sys
+
 import yaml
+
+import fluxstyle
 
 # Ordered list of section partials that compose the full template.
 # To reorder sections or add new ones, edit this list.
@@ -31,6 +35,42 @@ SECTION_ORDER = [
 ]
 
 SECTIONS_DIR = "sections"
+
+# Logo SVGs are single-sourced in fluxstyle; build.py copies them into
+# assets/images/ so the served files are generated, never hand-maintained.
+LOGO_VARIANTS = {
+    "full": "logo-fluxtech.svg",
+    "icon": "logo-fluxtech-icon.svg",
+    "wordmark": "logo-fluxtech-wordmark.svg",
+}
+
+# Markers in sections/head.html that build.py fills from fluxstyle before the
+# content pass (so they are never seen as content placeholders).
+BRAND_TOKENS_MARKER = "/* fluxstyle:brand-tokens */"
+FONT_LINK_MARKER = "<!-- fluxstyle:font-link -->"
+
+
+def inject_brand(template):
+    """Fill the fluxstyle markers in the assembled template: the brand-core
+    :root tokens (brand_css) and the web-font <link> (font_link_tag). Both come
+    from fluxstyle, so the site never re-types a brand hex, gradient, or font.
+    Fail loud if a marker is missing — a silently un-injected brand is the exact
+    drift consuming fluxstyle is meant to prevent.
+    """
+    for marker in (BRAND_TOKENS_MARKER, FONT_LINK_MARKER):
+        if marker not in template:
+            raise ValueError(f"fluxstyle marker missing from sections/head.html: {marker}")
+    template = template.replace(BRAND_TOKENS_MARKER, fluxstyle.brand_css().strip())
+    template = template.replace(FONT_LINK_MARKER, fluxstyle.font_link_tag())
+    return template
+
+
+def sync_logo_assets():
+    """Copy the canonical logo SVGs from fluxstyle into assets/images/."""
+    dest_dir = os.path.join("assets", "images")
+    for variant, filename in LOGO_VARIANTS.items():
+        shutil.copyfile(fluxstyle.logo_path(variant), os.path.join(dest_dir, filename))
+    print(f"Synced {len(LOGO_VARIANTS)} logo SVGs from fluxstyle.")
 
 
 def load_content(path="content.yaml"):
@@ -101,7 +141,7 @@ def find_template_placeholders(template):
 
 def build(check_only=False):
     content = load_content()
-    template = load_template()
+    template = inject_brand(load_template())
 
     placeholders = find_template_placeholders(template)
     yaml_keys = set(content.keys())
@@ -126,6 +166,8 @@ def build(check_only=False):
 
     if check_only:
         sys.exit(0)
+
+    sync_logo_assets()
 
     # Build
     output = template

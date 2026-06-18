@@ -18,11 +18,7 @@
     <meta property="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="https://flux-tech.de" />
     <link rel="icon" href="assets/images/logo-fluxtech-icon.svg" type="image/svg+xml" />
-    <link
-      href="https://fonts.googleapis.com/css2?display=swap&family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&display=swap" />
     <!-- Mark JS as available before first paint so reveal-on-scroll can hide its
          initial state without ever hiding content from no-JS / reduced-motion users. -->
     <script>
@@ -74,24 +70,49 @@
         color: inherit;
       }
       :focus-visible {
-        outline: 3px solid #007fad;
+        outline: 3px solid var(--c-teal);
         outline-offset: 3px;
         border-radius: 2px;
       }
 
-      /* ---- Tokens ---- */
+      /* ---- Brand tokens: pulled from fluxstyle at build time — do not hand-edit ---- */
+      /* ===================================================================
+   FluxTech brand-core tokens — the single source of truth for the
+   brand identity (colours, the brand gradient, the two type families).
+
+   This is the ONE place a brand hex value lives: the website and the
+   investor documents both consume it from here, never re-typing it. It
+   is read two ways from this one source:
+     - in CSS, via fluxstyle.brand_css() / document_css() (prepended);
+     - programmatically, via fluxstyle.tokens (parsed from THIS file at
+       import) and the color()/gradient()/font() accessors.
+
+   Brand-core ONLY. Site layout tokens (--maxw, --header-h, --radius,
+   --shadow, --measure) are site-specific and stay in the website.
+   Document-layer accents (the neutral grey ramp, the orange document
+   accent) are NOT brand-core — they live in document.css.
+   =================================================================== */
+:root {
+  --c-ink: #1a1d21;
+  --c-muted: #5b6469;
+  --c-teal: #007fad;
+  --c-green: #009a62;
+  --c-highlight: #cbf5e6;
+  --c-border: #e3eae8;
+  --c-tint: #f4f8f6;
+  --c-card: #ffffff;
+  /* rgb triples of the two accent colours, for rgba() alpha forms in consumers
+     (e.g. rgba(var(--c-teal-rgb), 0.28)). Held in lockstep with the hexes above
+     by test_rgb_tokens_match_hex — never drift one without the other. */
+  --c-teal-rgb: 0, 127, 173;
+  --c-green-rgb: 0, 154, 98;
+  --grad: linear-gradient(31deg, #007fad 0%, #009a62 70%);
+  --font-head: "Poppins", system-ui, sans-serif;
+  --font-body: "Source Code Pro", ui-monospace, monospace;
+}
+
+      /* ---- Site-layout tokens (site-specific; not brand) ---- */
       :root {
-        --c-ink: #1a1d21;
-        --c-muted: #5b6469;
-        --c-teal: #007fad;
-        --c-green: #009a62;
-        --c-highlight: #cbf5e6;
-        --c-border: #e3eae8;
-        --c-tint: #f4f8f6;
-        --c-card: #ffffff;
-        --grad: linear-gradient(31deg, #007fad 0%, #009a62 70%);
-        --font-head: "Poppins", system-ui, sans-serif;
-        --font-body: "Source Code Pro", ui-monospace, monospace;
         --maxw: 78rem; /* content shell width (desktop) */
         --maxw-wide: 78rem; /* header bar aligns with the shell */
         --measure: 44rem; /* readable text column (~70ch) inside the wide shell */
@@ -346,7 +367,7 @@
         flex: 0 0 auto;
         border-radius: 50%;
         background: #c2cdca;
-        box-shadow: 0 0 0 0 rgba(0, 154, 98, 0.25);
+        box-shadow: 0 0 0 0 rgba(var(--c-green-rgb), 0.25);
         transition:
           transform 0.2s ease,
           background-color 0.2s ease,
@@ -358,7 +379,7 @@
       .dot-nav a.active .dot-nav__dot {
         background: var(--c-green);
         transform: scale(1.65);
-        box-shadow: 0 0 0 4px rgba(0, 154, 98, 0.16);
+        box-shadow: 0 0 0 4px rgba(var(--c-green-rgb), 0.16);
       }
       .dot-nav__label {
         font-family: var(--font-head);
@@ -592,7 +613,7 @@
         text-align: center;
         padding-top: clamp(2.5rem, 6vw, 4rem);
         background:
-          radial-gradient(60% 60% at 50% 0%, rgba(0, 154, 98, 0.08), rgba(255, 255, 255, 0)),
+          radial-gradient(60% 60% at 50% 0%, rgba(var(--c-green-rgb), 0.08), rgba(255, 255, 255, 0)),
           #ffffff;
       }
       .hero__logo {
@@ -652,7 +673,7 @@
       }
       .btn--primary:hover {
         transform: translateY(-1px);
-        box-shadow: 0 10px 26px rgba(0, 127, 173, 0.28);
+        box-shadow: 0 10px 26px rgba(var(--c-teal-rgb), 0.28);
       }
       .btn--ghost {
         background: #fff;
