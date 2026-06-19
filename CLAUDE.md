@@ -79,6 +79,14 @@ are already in is noise and can trip the permission prompt.
 
 <!-- fluxtech-meta:no-redundant-cd END -->
 
+<!-- fluxtech-meta:collaboration BEGIN (generated — run `make sync` in fluxtech-meta) -->
+
+## Collaboration Workflow
+
+Branches and pull requests are for review by a collaborator, not a solo ritual. Working alone in a repo, commit and push to `main` directly — do not open a PR to yourself; reserve a feature branch and PR for changes that need another person's review. Pull `main` before starting so you are not on a stale base, never force-push a shared branch, and push before ending the session so work is never stranded locally.
+
+<!-- fluxtech-meta:collaboration END -->
+
 ## Architecture
 
 ```
