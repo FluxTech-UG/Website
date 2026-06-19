@@ -1,0 +1,8 @@
+[BATCH] Committed: 543797c "Update grant figures to confirmed ZIM 2025 Richtlinie values"
+
+All done. Summary of changes:
+
+- **content.yaml**: Feasibility €140k → €175k, ZIM R&D €252k/€280k → €550k/€560k, deployment range €400k–€1M → €460k–€1.2M
+- **sections/ask.html**: `FEAS_GRANT` 140→175, `FEAS_COFUND` 60→75, R&D ratio 45/55→50/50 (simplified to `coFundAvail`), R&D cap 252→550
+- **index.html**: Rebuilt from updated sources
+- All verification checks passed

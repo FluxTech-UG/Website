@@ -1,0 +1,9 @@
+[BATCH] Committed: cc17a3b "Add Future Energy Labs logo alongside MotionLab"
+
+All done. Here's a summary of what was completed:
+
+1. **Moved logo**: `FEL-Logo Transparent.png` → `assets/images/logo-future-energy-labs.png`
+2. **Added FEL logo element** in `sections/home.html` as `id="image-fel"` with `class="instance-15"` (same as MotionLab logo) immediately after `image15`
+3. **Updated `content.yaml`** `text37` to: *"MotionLab Berlin hardtech accelerator graduates. Based at Future Energy Labs (dena, Berlin)."*
+4. **Built** `index.html` — all 48 placeholders matched
+5. **Local server** running at http://localhost:8000 for visual verification — both logos should appear side by side in the home section
