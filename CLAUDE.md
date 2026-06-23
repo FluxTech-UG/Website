@@ -83,7 +83,9 @@ are already in is noise and can trip the permission prompt.
 
 ## Collaboration Workflow
 
-Branches and pull requests are for review by a collaborator, not a solo ritual. Working alone in a repo, commit and push to `main` directly — do not open a PR to yourself; reserve a feature branch and PR for changes that need another person's review. Pull `main` before starting so you are not on a stale base, never force-push a shared branch, and push before ending the session so work is never stranded locally.
+**Pull `main` before doing anything else in a repo.** The first action of any session in a repo is `git pull` on `main` — before reading deeply, branching, or editing — so every change starts from the current remote state and not a stale local base. This is the non-negotiable first step every time, not a thing to do later: starting on a stale base is what turns ordinary commits into merge conflicts and divergence.
+
+Branches and pull requests are for review by a collaborator, not a solo ritual. Working alone in a repo, commit and push to `main` directly — do not open a PR to yourself; reserve a feature branch and PR for changes that need another person's review. Never force-push a shared branch, and push before ending the session so work is never stranded locally.
 
 <!-- fluxtech-meta:collaboration END -->
 
