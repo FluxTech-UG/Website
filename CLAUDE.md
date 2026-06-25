@@ -5,34 +5,6 @@ exported from Carrd; that machine-generated substrate (the `.instance-N` classes
 `display:none` slide-switcher state machine) has since been **retired**. The site is now a
 hand-authored **continuous-scroll** page maintained via a content pipeline.
 
-<!-- fluxtech-meta:cross-repo-access BEGIN (generated — run `make sync` in fluxtech-meta) -->
-
-## Cross-Repo Access
-
-These repos are interconnected — packages (`co2-eos`, `fluxstyle`), the consumers
-built on them, and `Physics Spec` as the shared physics source of truth (the family
-`CLAUDE.md` at the repo-family root has the full map). When a task here consumes
-from or feeds another repo, **reading that repo's files directly is natural and
-encouraged** — work from the real source, not a remembered or copied version.
-**Editing a file outside this repo is forbidden without explicit permission for that
-change.** Read freely across the family; write only here.
-
-<!-- fluxtech-meta:cross-repo-access END -->
-
-<!-- fluxtech-meta:consuming-packages BEGIN (generated — run `make sync` in fluxtech-meta) -->
-
-## Consuming Packages
-
-This repo consumes shared packages; it does not vendor or re-type their contents.
-Import the package's published surface — or its generated artifact, e.g. the physics
-spec's `reference_operating_point.json` — rather than copying numbers, hexes, or
-formulas into this repo, where they would drift from canonical. When you need a
-package's value or behavior, read the package's own source as the authority. A need
-that seems to require editing a package is lifted into the package, not patched here.
-
-<!-- fluxtech-meta:consuming-packages END -->
-
-<!-- fluxtech-meta:consuming-packages LOCAL (repo-specific; hand-authored; kept across syncs) -->
 **In this repo.** `build.py` pulls the brand surface from `fluxstyle` at build
 time: the brand-core `:root` tokens (`fluxstyle.brand_css()`, injected at the
 `/* fluxstyle:brand-tokens */` marker in `sections/head.html`), the web-font
@@ -41,53 +13,6 @@ marker), and the three logo SVGs (`fluxstyle.logo_path()` → `assets/images/`).
 Don't hand-edit any of those — change the brand in `fluxstyle` and rebuild. Only
 site-layout tokens (`--maxw`, `--header-h`, `--radius`, `--shadow`, `--measure`)
 stay local. Build needs fluxstyle installed: `pip install -e ../../fluxstyle`.
-<!-- fluxtech-meta:consuming-packages LOCAL END -->
-
-<!-- fluxtech-meta:fail-fast BEGIN (generated — run `make sync` in fluxtech-meta) -->
-
-## Fail Fast
-
-No silent defaults; no caught exceptions that substitute a fallback value. A missing
-config field, an unphysical state, a failed inversion, a conservation or consistency
-violation beyond tolerance — raise immediately, with context. When a real value
-should exist, never paper over its absence with a default.
-
-<!-- fluxtech-meta:fail-fast END -->
-
-<!-- fluxtech-meta:living-documents BEGIN (generated — run `make sync` in fluxtech-meta) -->
-
-## Living Documents — No Archaeology
-
-Every file states only the current state. When an approach changes, rewrite the
-affected passage with the new result and delete what it replaced — git holds the
-history. This holds for instructions and framing as much as for outputs: say what
-the architecture *is*, not what it replaced. Never leave negative framing ("unlike
-the previous approach", "no longer …"): a retired claim left in the text plants a
-competing attractor a later reader may draw from. The one exception is a prior
-approach that is the model's likely default from training — a standard pattern it
-would reach for unprompted; there, an explicit override is worth stating.
-
-<!-- fluxtech-meta:living-documents END -->
-
-<!-- fluxtech-meta:no-redundant-cd BEGIN (generated — run `make sync` in fluxtech-meta) -->
-
-## No Redundant cd
-
-Commands run from the repo root; you are already there. Run them directly
-(`python scripts/run.py`), never `cd /path && …`. A leading `cd` into the repo you
-are already in is noise and can trip the permission prompt.
-
-<!-- fluxtech-meta:no-redundant-cd END -->
-
-<!-- fluxtech-meta:collaboration BEGIN (generated — run `make sync` in fluxtech-meta) -->
-
-## Collaboration Workflow
-
-**Pull `main` before doing anything else in a repo.** The first action of any session in a repo is `git pull` on `main` — before reading deeply, branching, or editing — so every change starts from the current remote state and not a stale local base. This is the non-negotiable first step every time, not a thing to do later: starting on a stale base is what turns ordinary commits into merge conflicts and divergence.
-
-Branches and pull requests are for review by a collaborator, not a solo ritual. Working alone in a repo, commit and push to `main` directly — do not open a PR to yourself; reserve a feature branch and PR for changes that need another person's review. Never force-push a shared branch, and push before ending the session so work is never stranded locally.
-
-<!-- fluxtech-meta:collaboration END -->
 
 ## Architecture
 
@@ -253,3 +178,7 @@ python build.py --check      # Dry run: validate YAML keys match template placeh
   update `SECTION_ORDER`, add the matching links to the top nav **and** the dot-nav in
   `head.html`, and add it to the `SECTION_IDS` array in the `closing.html` scroll-spy JS.
 - The brand identity: Poppins gradient headings, Source Code Pro body, the palette above.
+
+## Shared rules
+
+@../../fluxtech-meta/rules/category/consumer.md
