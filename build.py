@@ -26,6 +26,7 @@ SECTION_ORDER = [
     "home",
     "problem",
     "solution",
+    "prototype",
     "businessmodel",
     "physicsengineering",
     "market",

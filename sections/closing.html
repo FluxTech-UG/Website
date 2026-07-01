@@ -15,13 +15,13 @@
       </p>
     </footer>
 
-    <!-- Pitch video lightbox (launched from the hero) -->
+    <!-- Shared video lightbox (launched from any [data-open-video] trigger) -->
     <div
       class="video-lightbox"
       id="videoLightbox"
       role="dialog"
       aria-modal="true"
-      aria-label="FluxTech pitch video"
+      aria-label="FluxTech video"
     >
       <div class="video-lightbox__container">
         <button class="video-lightbox__close" type="button" aria-label="Close video" data-close-video>&times;</button>
@@ -29,7 +29,7 @@
           <iframe
             id="lightboxIframe"
             src=""
-            title="FluxTech pitch video"
+            title="FluxTech video"
             allow="autoplay; encrypted-media"
             allowfullscreen
             referrerpolicy="strict-origin-when-cross-origin"
@@ -46,6 +46,7 @@
           "home",
           "problem",
           "solution",
+          "prototype",
           "businessmodel",
           "physicsengineering",
           "market",
@@ -196,13 +197,22 @@
            --------------------------------------------------------------- */
         var lb = document.getElementById("videoLightbox");
         var lbIframe = document.getElementById("lightboxIframe");
-        var VIDEO_SRC =
-          "https://www.youtube-nocookie.com/embed/7AhBzJ9Yg6M?rel=0&loop=0&controls=1&cc_load_policy=0&autoplay=1";
         var lastFocused = null;
 
-        function openVideo() {
+        /* One lightbox, driven by the clicked trigger's data-video-id: the
+           embed URL is built from that id, so any [data-open-video] element
+           plays its own video with the same player params. */
+        function embedUrl(videoId) {
+          return (
+            "https://www.youtube-nocookie.com/embed/" +
+            encodeURIComponent(videoId) +
+            "?rel=0&loop=0&controls=1&cc_load_policy=0&autoplay=1"
+          );
+        }
+
+        function openVideo(videoId) {
           lastFocused = document.activeElement;
-          lbIframe.src = VIDEO_SRC;
+          lbIframe.src = embedUrl(videoId);
           lb.classList.add("is-visible");
           document.body.style.overflow = "hidden";
           var closeBtn = lb.querySelector("[data-close-video]");
@@ -215,9 +225,10 @@
           if (lastFocused && lastFocused.focus) lastFocused.focus();
         }
         document.addEventListener("click", function (e) {
-          if (e.target.closest && e.target.closest("[data-open-video]")) {
+          var trigger = e.target.closest && e.target.closest("[data-open-video]");
+          if (trigger) {
             e.preventDefault();
-            openVideo();
+            openVideo(trigger.getAttribute("data-video-id"));
           } else if (e.target.closest && e.target.closest("[data-close-video]")) {
             closeVideo();
           } else if (e.target === lb) {

@@ -614,6 +614,11 @@
         justify-content: center;
         margin-top: 2rem;
       }
+      .hero__pitch-note {
+        max-width: 44ch;
+        margin: 0.9rem auto 0;
+        text-align: center;
+      }
       .btn {
         display: inline-flex;
         align-items: center;
@@ -1029,7 +1034,77 @@
       }
 
       /* ===================================================================
-         Video lightbox (pitch video, launched from hero)
+         Video thumbnail — poster that opens the shared lightbox
+         =================================================================== */
+      .video-thumb {
+        position: relative;
+        display: block;
+        width: 100%;
+        max-width: 46rem;
+        margin: 1.75rem 0 0;
+        padding: 0;
+        border: 1px solid var(--c-border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: #000;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.2s ease;
+      }
+      .video-thumb:hover,
+      .video-thumb:focus-visible {
+        box-shadow: 0 10px 26px rgba(var(--c-teal-rgb), 0.28);
+      }
+      .video-thumb__poster {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        opacity: 0.92;
+        transition:
+          opacity 0.2s ease,
+          transform 0.3s ease;
+      }
+      .video-thumb__play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 4.5rem;
+        height: 4.5rem;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--grad);
+        color: #fff;
+        font-size: 1.5rem;
+        padding-left: 0.2rem; /* optically centre the ▶ glyph */
+        box-shadow: var(--shadow);
+        transition: transform 0.2s ease;
+      }
+      .video-thumb:hover .video-thumb__poster,
+      .video-thumb:focus-visible .video-thumb__poster {
+        opacity: 1;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .video-thumb:hover,
+        .video-thumb:focus-visible {
+          transform: translateY(-2px);
+        }
+        .video-thumb:hover .video-thumb__poster,
+        .video-thumb:focus-visible .video-thumb__poster {
+          transform: scale(1.02);
+        }
+        .video-thumb:hover .video-thumb__play,
+        .video-thumb:focus-visible .video-thumb__play {
+          transform: translate(-50%, -50%) scale(1.08);
+        }
+      }
+
+      /* ===================================================================
+         Video lightbox (shared; launched from any [data-open-video] trigger)
          =================================================================== */
       .video-lightbox {
         display: none;
@@ -1177,6 +1252,7 @@
           <ul>
             <li><a href="#problem">Problem</a></li>
             <li><a href="#solution">Solution</a></li>
+            <li><a href="#prototype">Prototype</a></li>
             <li><a href="#businessmodel">Model</a></li>
             <li><a href="#physicsengineering">Physics</a></li>
             <li><a href="#market">Market</a></li>
@@ -1192,6 +1268,7 @@
         <li><a href="#home"><span class="dot-nav__dot"></span><span class="dot-nav__label">Home</span></a></li>
         <li><a href="#problem"><span class="dot-nav__dot"></span><span class="dot-nav__label">Problem</span></a></li>
         <li><a href="#solution"><span class="dot-nav__dot"></span><span class="dot-nav__label">Solution</span></a></li>
+        <li><a href="#prototype"><span class="dot-nav__dot"></span><span class="dot-nav__label">Prototype</span></a></li>
         <li>
           <a href="#businessmodel"><span class="dot-nav__dot"></span><span class="dot-nav__label">Business Model</span></a>
         </li>

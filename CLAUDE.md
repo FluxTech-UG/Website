@@ -28,12 +28,13 @@ flux-tech.de/
 │   ├── home.html          # #home  — hero (logo, tagline, pitch-video button, partners)
 │   ├── problem.html       # #problem (incl. IEA chart figure)
 │   ├── solution.html      # #solution
+│   ├── prototype.html     # #prototype — copy + video thumbnail (opens shared lightbox)
 │   ├── businessmodel.html # #businessmodel (3-card grid)
 │   ├── physicsengineering.html # #physicsengineering — numbered walkthrough of 6 steps
 │   ├── market.html        # #market (3-card grid with icons)
 │   ├── team.html          # #team (member cards)
 │   ├── ask.html           # #ask — Chart.js grant-leverage widget (self-contained) + CTA
-│   └── closing.html       # Closes </main>, site footer + credits, back-to-top, pitch-video
+│   └── closing.html       # Closes </main>, site footer + credits, back-to-top, shared video
 │                          #   lightbox, and ALL the page JS (scroll-spy, reveal, nav, etc.)
 ├── index.html             # Built output — served by GitHub Pages. NEVER edit directly
 └── assets/
@@ -88,12 +89,12 @@ multi-paragraph values get consistent spacing — including inside `.card` / `.f
 The page is **one continuous scroll**. There is no slide-switcher, no landing menu, and no
 per-section "Back" links. Each `sections/*.html` partial emits one
 `<section id="…" class="section" tabindex="-1">`. Section `id`s (`home`, `problem`,
-`solution`, `businessmodel`, `physicsengineering`, `market`, `team`, `ask`) double as the
-in-page anchor targets used by the navigation and the `[here](#…)` cross-links in copy.
+`solution`, `prototype`, `businessmodel`, `physicsengineering`, `market`, `team`, `ask`) double
+as the in-page anchor targets used by the navigation and the `[here](#…)` cross-links in copy.
 
 The navigation system (all CSS in `head.html`, all JS in `closing.html`):
 
-- **Sticky top header** with the FluxTech brand + seven section links. On mobile it collapses
+- **Sticky top header** with the FluxTech brand + eight section links. On mobile it collapses
   to a horizontally scrollable chip row (labels stay visible — no hamburger).
 - **Scroll-spy** via one `IntersectionObserver` (`rootMargin: -45% 0 -45%`). The active
   section's links in the top nav and dot-nav get both `.active` and `aria-current="true"`.
@@ -161,9 +162,11 @@ python build.py --check      # Dry run: validate YAML keys match template placeh
   not the page's teal-green gradient. All three share one coordinate space (`userSpaceOnUse`
   gradient), so if the mark changes, re-crop the variants from the master with their bounding
   boxes rather than editing each by hand.
-- The YouTube pitch-video embed (id `7AhBzJ9Yg6M`) lives in the lightbox JS in
-  `sections/closing.html`; it is launched from the hero's "Watch the pitch" button
-  (`[data-open-video]`).
+- One shared YouTube lightbox lives in `sections/closing.html`. Any `[data-open-video]`
+  trigger carries its own `data-video-id`; the JS reads that id from the clicked trigger
+  and builds the `youtube-nocookie` embed URL, so a single code path drives every video.
+  Current triggers: the hero's "Watch the pitch" button (id `6mLoOKX7IhY`) and the
+  Prototype section thumbnail (id `Zs-HCMfXJaA`).
 
 ## What to Preserve
 
@@ -172,7 +175,7 @@ python build.py --check      # Dry run: validate YAML keys match template placeh
   `.p` paragraph wrapping working.
 - The **Ask** Chart.js grant-leverage widget in `sections/ask.html` — its `<style>`, markup,
   and `<script>` are self-contained; keep them intact and the `Chart.js` CDN tag above it.
-- The seven content sections + hero, all copy, the IEA chart, headshots, partner logos, icons,
+- The eight content sections + hero, all copy, the IEA chart, headshots, partner logos, icons,
   the heat-modulation diagram, and external links.
 - The navigation system and reveal/motion behaviour described above. If you add a section,
   update `SECTION_ORDER`, add the matching links to the top nav **and** the dot-nav in

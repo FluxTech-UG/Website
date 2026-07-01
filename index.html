@@ -647,6 +647,11 @@
         justify-content: center;
         margin-top: 2rem;
       }
+      .hero__pitch-note {
+        max-width: 44ch;
+        margin: 0.9rem auto 0;
+        text-align: center;
+      }
       .btn {
         display: inline-flex;
         align-items: center;
@@ -1062,7 +1067,77 @@
       }
 
       /* ===================================================================
-         Video lightbox (pitch video, launched from hero)
+         Video thumbnail — poster that opens the shared lightbox
+         =================================================================== */
+      .video-thumb {
+        position: relative;
+        display: block;
+        width: 100%;
+        max-width: 46rem;
+        margin: 1.75rem 0 0;
+        padding: 0;
+        border: 1px solid var(--c-border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: #000;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.2s ease;
+      }
+      .video-thumb:hover,
+      .video-thumb:focus-visible {
+        box-shadow: 0 10px 26px rgba(var(--c-teal-rgb), 0.28);
+      }
+      .video-thumb__poster {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        opacity: 0.92;
+        transition:
+          opacity 0.2s ease,
+          transform 0.3s ease;
+      }
+      .video-thumb__play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 4.5rem;
+        height: 4.5rem;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--grad);
+        color: #fff;
+        font-size: 1.5rem;
+        padding-left: 0.2rem; /* optically centre the ▶ glyph */
+        box-shadow: var(--shadow);
+        transition: transform 0.2s ease;
+      }
+      .video-thumb:hover .video-thumb__poster,
+      .video-thumb:focus-visible .video-thumb__poster {
+        opacity: 1;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .video-thumb:hover,
+        .video-thumb:focus-visible {
+          transform: translateY(-2px);
+        }
+        .video-thumb:hover .video-thumb__poster,
+        .video-thumb:focus-visible .video-thumb__poster {
+          transform: scale(1.02);
+        }
+        .video-thumb:hover .video-thumb__play,
+        .video-thumb:focus-visible .video-thumb__play {
+          transform: translate(-50%, -50%) scale(1.08);
+        }
+      }
+
+      /* ===================================================================
+         Video lightbox (shared; launched from any [data-open-video] trigger)
          =================================================================== */
       .video-lightbox {
         display: none;
@@ -1210,6 +1285,7 @@
           <ul>
             <li><a href="#problem">Problem</a></li>
             <li><a href="#solution">Solution</a></li>
+            <li><a href="#prototype">Prototype</a></li>
             <li><a href="#businessmodel">Model</a></li>
             <li><a href="#physicsengineering">Physics</a></li>
             <li><a href="#market">Market</a></li>
@@ -1225,6 +1301,7 @@
         <li><a href="#home"><span class="dot-nav__dot"></span><span class="dot-nav__label">Home</span></a></li>
         <li><a href="#problem"><span class="dot-nav__dot"></span><span class="dot-nav__label">Problem</span></a></li>
         <li><a href="#solution"><span class="dot-nav__dot"></span><span class="dot-nav__label">Solution</span></a></li>
+        <li><a href="#prototype"><span class="dot-nav__dot"></span><span class="dot-nav__label">Prototype</span></a></li>
         <li>
           <a href="#businessmodel"><span class="dot-nav__dot"></span><span class="dot-nav__label">Business Model</span></a>
         </li>
@@ -1253,11 +1330,12 @@
           <div id="text26" class="prose hero__body reveal"><span class="p">Data centers are the energy infrastructure challenge of our time. Currently, their excess heat is vented as waste. But we see it as a fuel source.</span><span class="p">Our technology will harvest data centre heat as an asset and convert it back into electricity to power each AI data centre more efficiently and sustainably.</span><span class="p">As we move toward our MVP and initial pilots, we are building the new standard for energy recovery. <strong>Join us.</strong></span></div>
 
           <div class="hero__cta reveal">
-            <button type="button" class="btn btn--primary" data-open-video>
+            <button type="button" class="btn btn--primary" data-open-video data-video-id="6mLoOKX7IhY">
               <span aria-hidden="true">▶</span> Watch the pitch
             </button>
             <a class="btn btn--ghost" href="#problem">Explore the story</a>
           </div>
+          <p id="text-pitch-note" class="caption hero__pitch-note reveal">Some details in the pitch have moved on since recording. See below for the latest.</p>
 
           <div class="hero__affiliations reveal">
           <div class="partner-group" role="group" aria-labelledby="partner-group-backed">
@@ -1421,6 +1499,34 @@
           <div class="section__body">
             <div id="text36" class="prose reveal"><span class="p">FluxTech bridges the "Thermodynamic Dead Zone" by converting low-grade server heat into high-value electricity that can help power the data centre in a closed, sustainable loop. While legacy systems require temperatures above 80°C to function, our technology is intended to operate with high efficiency in the 40–65°C range common to modern data centres.</span><span class="p"><strong>The sCO₂ Advantage.</strong></span><span class="p">We utilize supercritical CO₂ (sCO₂) as a working fluid. Near its critical point, sCO₂ gains immense thermodynamic leverage: small temperature changes trigger massive state changes. This sensitivity allows us to extract energy where traditional turbines find only "waste".</span><span class="p"><strong>Engineered for Reliability.</strong></span><span class="p">Our thermoacoustic engine contains practically no moving parts. No turbines, no pistons, and minimal mechanical friction. By converting heat into acoustic waves to drive a linear alternator, we ensure operational longevity sustainably.</span><span class="p"><strong>AI-Driven Precision.</strong></span><span class="p">Operating near the CO₂ critical point is inherently nonlinear. FluxTech’s core proprietary technology utilizes real-time AI control systems to stabilize these dynamics, optimizing efficiency every second based on live operational data. This creates a technical moat: the hardware cannot function without the control system, and the system is trained on data unique to our architecture.</span><span class="p"><strong>Seamless Integration.</strong></span></div>
             <div id="text29" class="prose feature-list reveal"><span class="p"><mark>Operational Cooling System.</mark> FluxTech is the site's cooling pathway in normal operation, sized to site load.</span><span class="p"><mark>Backup-Redundant.</mark> The existing cooling stack stays in place as backup. On fault, the engine decouples automatically and uptime is unaffected.</span><span class="p"><mark>Grid Ready.</mark> We turn a thermal liability into a measurable reduction in grid dependency.</span></div>
+          </div>
+        </div>
+      </section>
+      <section id="prototype" class="section" tabindex="-1" aria-labelledby="text-prototype-title">
+        <div class="section__inner">
+          <div class="section__head">
+            <h2 id="text-prototype-title" class="h-section reveal">Working Prototype</h2>
+          </div>
+          <div class="section__body">
+            <button
+              type="button"
+              class="video-thumb reveal"
+              data-open-video
+              data-video-id="Zs-HCMfXJaA"
+              aria-label="Play the working prototype video"
+            >
+              <img
+                class="video-thumb__poster"
+                src="https://i.ytimg.com/vi/Zs-HCMfXJaA/maxresdefault.jpg"
+                alt=""
+                width="1280"
+                height="720"
+                loading="lazy"
+              />
+              <span class="video-thumb__play" aria-hidden="true">▶</span>
+            </button>
+
+            <div id="text-prototype-body" class="prose reveal"><span class="p">We built a traveling wave thermoacoustic engine: a full stack from heat input to electricity out, with no piston and no turbine. A closed loop gives the system an acoustic resonance, and the wave travels around the loop to do the work.</span><span class="p">This build is a demonstration and a research platform. It is the foundation for the development we are doing on top of it. Our technology goes well beyond what you see here, and we are moving toward filing on the IP behind it. Investors who would like to discuss the details can <a href="mailto:john@flux-tech.de">reach out directly</a>.</span></div>
           </div>
         </div>
       </section>
@@ -1934,13 +2040,13 @@
       </p>
     </footer>
 
-    <!-- Pitch video lightbox (launched from the hero) -->
+    <!-- Shared video lightbox (launched from any [data-open-video] trigger) -->
     <div
       class="video-lightbox"
       id="videoLightbox"
       role="dialog"
       aria-modal="true"
-      aria-label="FluxTech pitch video"
+      aria-label="FluxTech video"
     >
       <div class="video-lightbox__container">
         <button class="video-lightbox__close" type="button" aria-label="Close video" data-close-video>&times;</button>
@@ -1948,7 +2054,7 @@
           <iframe
             id="lightboxIframe"
             src=""
-            title="FluxTech pitch video"
+            title="FluxTech video"
             allow="autoplay; encrypted-media"
             allowfullscreen
             referrerpolicy="strict-origin-when-cross-origin"
@@ -1965,6 +2071,7 @@
           "home",
           "problem",
           "solution",
+          "prototype",
           "businessmodel",
           "physicsengineering",
           "market",
@@ -2115,13 +2222,22 @@
            --------------------------------------------------------------- */
         var lb = document.getElementById("videoLightbox");
         var lbIframe = document.getElementById("lightboxIframe");
-        var VIDEO_SRC =
-          "https://www.youtube-nocookie.com/embed/7AhBzJ9Yg6M?rel=0&loop=0&controls=1&cc_load_policy=0&autoplay=1";
         var lastFocused = null;
 
-        function openVideo() {
+        /* One lightbox, driven by the clicked trigger's data-video-id: the
+           embed URL is built from that id, so any [data-open-video] element
+           plays its own video with the same player params. */
+        function embedUrl(videoId) {
+          return (
+            "https://www.youtube-nocookie.com/embed/" +
+            encodeURIComponent(videoId) +
+            "?rel=0&loop=0&controls=1&cc_load_policy=0&autoplay=1"
+          );
+        }
+
+        function openVideo(videoId) {
           lastFocused = document.activeElement;
-          lbIframe.src = VIDEO_SRC;
+          lbIframe.src = embedUrl(videoId);
           lb.classList.add("is-visible");
           document.body.style.overflow = "hidden";
           var closeBtn = lb.querySelector("[data-close-video]");
@@ -2134,9 +2250,10 @@
           if (lastFocused && lastFocused.focus) lastFocused.focus();
         }
         document.addEventListener("click", function (e) {
-          if (e.target.closest && e.target.closest("[data-open-video]")) {
+          var trigger = e.target.closest && e.target.closest("[data-open-video]");
+          if (trigger) {
             e.preventDefault();
-            openVideo();
+            openVideo(trigger.getAttribute("data-video-id"));
           } else if (e.target.closest && e.target.closest("[data-close-video]")) {
             closeVideo();
           } else if (e.target === lb) {

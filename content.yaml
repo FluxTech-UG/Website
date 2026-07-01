@@ -27,6 +27,8 @@ text26: |
 
   As we move toward our MVP and initial pilots, we are building the new standard for energy recovery. **Join us.**
 
+text-pitch-note: "Some details in the pitch have moved on since recording. See below for the latest."
+
 text37: "MotionLab Berlin hardtech accelerator graduates. Based at Future Energy Lab (dena, Berlin)."
 
 # ---------------------------------------------------------------------------
@@ -82,6 +84,17 @@ text29: |
   ==Backup-Redundant.== The existing cooling stack stays in place as backup. On fault, the engine decouples automatically and uptime is unaffected.
 
   ==Grid Ready.== We turn a thermal liability into a measurable reduction in grid dependency.
+
+# ---------------------------------------------------------------------------
+# Prototype Section
+# ---------------------------------------------------------------------------
+
+text-prototype-title: "Working Prototype"
+
+text-prototype-body: |
+  We built a traveling wave thermoacoustic engine: a full stack from heat input to electricity out, with no piston and no turbine. A closed loop gives the system an acoustic resonance, and the wave travels around the loop to do the work.
+
+  This build is a demonstration and a research platform. It is the foundation for the development we are doing on top of it. Our technology goes well beyond what you see here, and we are moving toward filing on the IP behind it. Investors who would like to discuss the details can [reach out directly](mailto:john@flux-tech.de).
 
 # ---------------------------------------------------------------------------
 # Business Model Section
