@@ -125,6 +125,12 @@ Reveals fire once via `IntersectionObserver` (then unobserve) and animate only
 `opacity`/`transform`. The `<html>` element gets a `.js` class from a tiny inline script in
 `head.html` before first paint.
 
+The paper-wrinkle texture on every section (`.section::before` in `head.html`) integrates
+the visitor's scrolling within that section: its opacity follows the section's `--paper`
+custom property, which the `closing.html` integrator raises by `0.8 × Σ|Δp|` (p = the section's
+scroll-through progress, so one full pass gives 80 % of max, scrolling back saturates at max)
+from a rest value of 12 % of max. Reduced-motion and no-JS visitors get the maximum, static.
+
 ## Build Script Behavior
 
 `build.py` assembles the full template by concatenating `sections/*.html` partials in

@@ -427,6 +427,11 @@
            section backgrounds (which made the texture appear only on some
            sections). Keeps wrinkle intensity uniform across every section. */
         isolation: isolate;
+        /* Paper-wrinkle intensity in [0,1], read by ::before below. 1 = the
+           maximum: the value no-JS and reduced-motion visitors see. With JS
+           and motion allowed it starts at 0 (12 % of max) and the scroll
+           integrator in closing.html raises it per section. */
+        --paper: 1;
         scroll-margin-top: calc(var(--header-h) + 1rem);
         padding: clamp(3.25rem, 7vw, 5.5rem) 0;
         border-bottom: 1px solid var(--c-border);
@@ -441,7 +446,9 @@
          (no blend mode) it lays the SAME shadow onto any section — white or tint —
          so wrinkle intensity is independent of the background colour. Finer, denser
          folds keep every section evenly textured (no occasional large creases).
-         Sits behind the section content (z-index:-1). Static, no extra request. */
+         Sits behind the section content (z-index:-1). No extra request. Opacity
+         follows the section's --paper: 12 % of the 0.1 maximum at 0, the maximum
+         at 1 — the visitor's scrolling within the section integrates it up. */
       .section::before {
         content: "";
         position: absolute;
@@ -450,7 +457,12 @@
         pointer-events: none;
         background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='700'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.030' numOctaves='4' seed='14' stitchTiles='stitch' result='n'/><feDiffuseLighting in='n' surfaceScale='2.8' diffuseConstant='1' lighting-color='%23ffffff' result='l'><feDistantLight azimuth='225' elevation='62'/></feDiffuseLighting><feColorMatrix in='l' type='matrix' values='0 0 0 0 0.102 0 0 0 0 0.114 0 0 0 0 0.129 -0.33 -0.34 -0.33 0 1' result='a'/><feComponentTransfer in='a'><feFuncA type='linear' slope='1.7' intercept='-0.10'/></feComponentTransfer></filter><rect width='700' height='700' filter='url(%23p)'/></svg>");
         background-size: 700px 700px;
-        opacity: 0.1;
+        opacity: calc(0.1 * (0.12 + 0.88 * var(--paper)));
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        html.js .section {
+          --paper: 0; /* at rest until scrolled through; JS writes the rest */
+        }
       }
       .section__inner {
         max-width: var(--maxw);

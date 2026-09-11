@@ -463,6 +463,11 @@
            section backgrounds (which made the texture appear only on some
            sections). Keeps wrinkle intensity uniform across every section. */
         isolation: isolate;
+        /* Paper-wrinkle intensity in [0,1], read by ::before below. 1 = the
+           maximum: the value no-JS and reduced-motion visitors see. With JS
+           and motion allowed it starts at 0 (12 % of max) and the scroll
+           integrator in closing.html raises it per section. */
+        --paper: 1;
         scroll-margin-top: calc(var(--header-h) + 1rem);
         padding: clamp(3.25rem, 7vw, 5.5rem) 0;
         border-bottom: 1px solid var(--c-border);
@@ -477,7 +482,9 @@
          (no blend mode) it lays the SAME shadow onto any section — white or tint —
          so wrinkle intensity is independent of the background colour. Finer, denser
          folds keep every section evenly textured (no occasional large creases).
-         Sits behind the section content (z-index:-1). Static, no extra request. */
+         Sits behind the section content (z-index:-1). No extra request. Opacity
+         follows the section's --paper: 12 % of the 0.1 maximum at 0, the maximum
+         at 1 — the visitor's scrolling within the section integrates it up. */
       .section::before {
         content: "";
         position: absolute;
@@ -486,7 +493,12 @@
         pointer-events: none;
         background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='700'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.030' numOctaves='4' seed='14' stitchTiles='stitch' result='n'/><feDiffuseLighting in='n' surfaceScale='2.8' diffuseConstant='1' lighting-color='%23ffffff' result='l'><feDistantLight azimuth='225' elevation='62'/></feDiffuseLighting><feColorMatrix in='l' type='matrix' values='0 0 0 0 0.102 0 0 0 0 0.114 0 0 0 0 0.129 -0.33 -0.34 -0.33 0 1' result='a'/><feComponentTransfer in='a'><feFuncA type='linear' slope='1.7' intercept='-0.10'/></feComponentTransfer></filter><rect width='700' height='700' filter='url(%23p)'/></svg>");
         background-size: 700px 700px;
-        opacity: 0.1;
+        opacity: calc(0.1 * (0.12 + 0.88 * var(--paper)));
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        html.js .section {
+          --paper: 0; /* at rest until scrolled through; JS writes the rest */
+        }
       }
       .section__inner {
         max-width: var(--maxw);
@@ -2180,6 +2192,65 @@
           addEventListener("scroll", onProgress, { passive: true });
           addEventListener("resize", onProgress);
           onProgress();
+        }
+
+        /* ---------------------------------------------------------------
+           Paper wrinkle integrates scrolling, per section. p in [0,1] is
+           how far a section has been scrolled through (0: its top at the
+           viewport bottom, 1: its bottom at the viewport top). Every frame
+           adds |Δp| to the section's accumulator A — down and up both
+           count — and intensity f = min(1, 0.8·A) goes to the section's
+           --paper (head.html maps it to ::before opacity: 12 % of max at
+           0, max at 1). One full pass reaches 0.8; scrolling back
+           saturates at 1 and stays. Reduced motion: CSS keeps --paper at
+           1 (max) and nothing here runs.
+           --------------------------------------------------------------- */
+        if (!prefersReducedMotion.matches) {
+          var papers = SECTION_IDS.map(function (id) {
+            return document.getElementById(id);
+          }).filter(Boolean).map(function (el) {
+            return { el: el, top: 0, height: 1, p: 0, acc: 0, f: 0 };
+          });
+          var paperTicking = false;
+          var paperProgress = function (s, y, vh) {
+            var p = (y + vh - s.top) / (vh + s.height);
+            return p < 0 ? 0 : p > 1 ? 1 : p;
+          };
+          /* One read pass caches document-space tops and heights; scroll
+             frames then read only scrollY. Re-baselines p so a reflow is
+             not counted as scrolling. Refreshed on resize and load. */
+          var measurePaper = function () {
+            var y = scrollY, vh = innerHeight;
+            papers.forEach(function (s) {
+              var r = s.el.getBoundingClientRect();
+              s.top = r.top + y;
+              s.height = r.height;
+              s.p = paperProgress(s, y, vh);
+            });
+          };
+          var paperFrame = function () {
+            paperTicking = false;
+            var y = scrollY, vh = innerHeight;
+            papers.forEach(function (s) {
+              var p = paperProgress(s, y, vh);
+              s.acc += Math.abs(p - s.p);
+              s.p = p;
+              var f = Math.min(1, 0.8 * s.acc);
+              if (f !== s.f) {
+                s.f = f;
+                s.el.style.setProperty("--paper", f.toFixed(3));
+              }
+            });
+          };
+          measurePaper();
+          addEventListener("scroll", function () {
+            if (!paperTicking) {
+              paperTicking = true;
+              requestAnimationFrame(paperFrame);
+            }
+          }, { passive: true });
+          addEventListener("resize", measurePaper);
+          addEventListener("load", measurePaper);
         }
 
         /* ---------------------------------------------------------------

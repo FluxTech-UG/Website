@@ -155,6 +155,65 @@
         }
 
         /* ---------------------------------------------------------------
+           Paper wrinkle integrates scrolling, per section. p in [0,1] is
+           how far a section has been scrolled through (0: its top at the
+           viewport bottom, 1: its bottom at the viewport top). Every frame
+           adds |Δp| to the section's accumulator A — down and up both
+           count — and intensity f = min(1, 0.8·A) goes to the section's
+           --paper (head.html maps it to ::before opacity: 12 % of max at
+           0, max at 1). One full pass reaches 0.8; scrolling back
+           saturates at 1 and stays. Reduced motion: CSS keeps --paper at
+           1 (max) and nothing here runs.
+           --------------------------------------------------------------- */
+        if (!prefersReducedMotion.matches) {
+          var papers = SECTION_IDS.map(function (id) {
+            return document.getElementById(id);
+          }).filter(Boolean).map(function (el) {
+            return { el: el, top: 0, height: 1, p: 0, acc: 0, f: 0 };
+          });
+          var paperTicking = false;
+          var paperProgress = function (s, y, vh) {
+            var p = (y + vh - s.top) / (vh + s.height);
+            return p < 0 ? 0 : p > 1 ? 1 : p;
+          };
+          /* One read pass caches document-space tops and heights; scroll
+             frames then read only scrollY. Re-baselines p so a reflow is
+             not counted as scrolling. Refreshed on resize and load. */
+          var measurePaper = function () {
+            var y = scrollY, vh = innerHeight;
+            papers.forEach(function (s) {
+              var r = s.el.getBoundingClientRect();
+              s.top = r.top + y;
+              s.height = r.height;
+              s.p = paperProgress(s, y, vh);
+            });
+          };
+          var paperFrame = function () {
+            paperTicking = false;
+            var y = scrollY, vh = innerHeight;
+            papers.forEach(function (s) {
+              var p = paperProgress(s, y, vh);
+              s.acc += Math.abs(p - s.p);
+              s.p = p;
+              var f = Math.min(1, 0.8 * s.acc);
+              if (f !== s.f) {
+                s.f = f;
+                s.el.style.setProperty("--paper", f.toFixed(3));
+              }
+            });
+          };
+          measurePaper();
+          addEventListener("scroll", function () {
+            if (!paperTicking) {
+              paperTicking = true;
+              requestAnimationFrame(paperFrame);
+            }
+          }, { passive: true });
+          addEventListener("resize", measurePaper);
+          addEventListener("load", measurePaper);
+        }
+
+        /* ---------------------------------------------------------------
            Smooth in-page navigation WITH focus management. After the
            scroll we move keyboard focus to the target section (each
            section[id] has tabindex="-1") so anchor/skip/dot/Next jumps
