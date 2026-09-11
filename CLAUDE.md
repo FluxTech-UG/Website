@@ -9,7 +9,10 @@ hand-authored **continuous-scroll** page maintained via a content pipeline.
 time: the brand-core `:root` tokens (`fluxstyle.brand_css()`, injected at the
 `/* fluxstyle:brand-tokens */` marker in `sections/head.html`), the web-font
 `<link>` (`fluxstyle.font_link_tag()`, at the `<!-- fluxstyle:font-link -->`
-marker), and the three logo SVGs (`fluxstyle.logo_path()` → `assets/images/`).
+marker), the three logo SVGs (`fluxstyle.logo_path()` → `assets/images/`), and the
+nine disc icons (`fluxstyle.icon_png()` → `assets/images/icon-*.png`; a plain build
+writes only missing ones, `python build.py --icons` rewrites all after a fluxstyle
+change, and needs headless Chromium).
 Don't hand-edit any of those — change the brand in `fluxstyle` and rebuild. Only
 site-layout tokens (`--maxw`, `--header-h`, `--radius`, `--shadow`, `--measure`)
 stay local. Build needs fluxstyle installed: `pip install -e ../../fluxstyle`.

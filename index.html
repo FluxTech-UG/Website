@@ -106,7 +106,10 @@
      by test_rgb_tokens_match_hex — never drift one without the other. */
   --c-teal-rgb: 0, 127, 173;
   --c-green-rgb: 0, 154, 98;
-  --grad: linear-gradient(31deg, #007fad 0%, #009a62 70%);
+  /* The brand gradient is the logo's own sweep: lime at the upper left to blue at
+     the lower right, the blue stop at 82 %. The same stops live in
+     brand/assets/logo-fluxtech-icon.svg; test_grad_matches_the_logo keeps them equal. */
+  --grad: linear-gradient(115deg, #b5f200 0%, #0a6fe6 82%);
   --font-head: "Poppins", system-ui, sans-serif;
   --font-body: "Source Code Pro", ui-monospace, monospace;
 }
@@ -1561,7 +1564,7 @@
             <li class="step reveal">
               <div class="step__rail">
                 <span class="step__num"></span>
-                <img class="step__icon" src="assets/images/icon-thermal-capture.jpg?v=e1d5cfd8" alt="" width="200" height="200" />
+                <img class="step__icon" src="assets/images/icon-thermal-capture.png?v=fs090" alt="" width="400" height="400" />
                 <span class="step__line"></span>
               </div>
               <div class="step__body"><p id="text18" class="prose"><strong>Thermal Capture.</strong><br /> Low-grade waste heat (40–65°C) is drawn from the server cooling circuit through high-efficiency printed circuit heat exchangers. This thermal energy is transferred to our working fluid: supercritical CO₂ (sCO₂).</p></div>
@@ -1570,7 +1573,7 @@
             <li class="step reveal">
               <div class="step__rail">
                 <span class="step__num"></span>
-                <img class="step__icon" src="assets/images/icon-acoustic-amplification.jpg?v=e1d5cfd8" alt="" width="200" height="200" />
+                <img class="step__icon" src="assets/images/icon-acoustic-amplification.png?v=fs090" alt="" width="400" height="400" />
                 <span class="step__line"></span>
               </div>
               <div class="step__body"><p id="text19" class="prose"><strong>Acoustic Amplification.</strong><br /> Near its critical point, sCO₂ becomes hyper-sensitive to temperature changes. As the fluid absorbs heat, it expands and contracts, creating self-sustaining acoustic pressure waves within a resonant cavity. By using sCO₂, we gain the thermodynamic leverage required to operate in the "Dead Zone" where traditional turbines fail.</p></div>
@@ -1579,7 +1582,7 @@
             <li class="step reveal">
               <div class="step__rail">
                 <span class="step__num"></span>
-                <img class="step__icon" src="assets/images/icon-solid-state-conversion.jpg?v=e1d5cfd8" alt="" width="200" height="200" />
+                <img class="step__icon" src="assets/images/icon-solid-state-conversion.png?v=fs090" alt="" width="400" height="400" />
                 <span class="step__line"></span>
               </div>
               <div class="step__body"><p id="text20" class="prose"><strong>Energy conversion.</strong><br /> These high-energy acoustic waves drive a linear alternator to generate electricity. Because the conversion is driven by sound rather than rotation, the engine contains no moving parts: no turbines, no pistons, and no bearings. Reliability is structural.</p></div>
@@ -1588,7 +1591,7 @@
             <li class="step reveal">
               <div class="step__rail">
                 <span class="step__num"></span>
-                <img class="step__icon" src="assets/images/icon-ai-optimization.jpg?v=e1d5cfd8" alt="" width="200" height="200" />
+                <img class="step__icon" src="assets/images/icon-ai-optimization.png?v=fs090" alt="" width="400" height="400" />
                 <span class="step__line"></span>
               </div>
               <div class="step__body"><p id="text21" class="prose"><strong>AI Optimization.</strong><br /> Operating near the critical point is inherently nonlinear and unstable. Our proprietary AI control system monitors operational data in real-time, adjusting valve timing and flow rates every second to keep the system in its highest efficiency band.</p></div>
@@ -1597,7 +1600,7 @@
             <li class="step reveal">
               <div class="step__rail">
                 <span class="step__num"></span>
-                <img class="step__icon" src="assets/images/icon-seamless-integration.jpg?v=e1d5cfd8" alt="" width="200" height="200" />
+                <img class="step__icon" src="assets/images/icon-seamless-integration.png?v=fs090" alt="" width="400" height="400" />
                 <span class="step__line"></span>
               </div>
               <div class="step__body"><p id="text28" class="prose"><strong>Seamless Integration.</strong><br /> FluxTech is the cooling pathway in normal operation. The existing cooling stack stays in place as backup; on fault, the engine decouples automatically and uptime is unaffected. Residual heat after electricity extraction is passed through at the appropriate temperature for secondary reuse.</p></div>
@@ -1606,7 +1609,7 @@
             <li class="step reveal">
               <div class="step__rail">
                 <span class="step__num"></span>
-                <img class="step__icon" src="assets/images/icon-heat-modulation.png?v=e1d5cfd8" alt="" width="800" height="800" />
+                <img class="step__icon" src="assets/images/icon-heat-modulation.png?v=fs090" alt="" width="400" height="400" />
                 <span class="step__line"></span>
               </div>
               <div class="step__body"><p id="text-heatmod" class="prose"><strong>Heat Modulation.</strong><br /> Our core differentiating mechanism. Controlled, phase-locked thermal exchange synchronises heat input with the engine’s acoustic cycle, maximising energy transfer at each oscillation. This architecture has no published precedent and is the subject of our first ZIM feasibility study.</p></div>
@@ -1625,15 +1628,15 @@
 
             <div class="card-grid reveal">
               <div class="card">
-                <img class="card__icon" src="assets/images/icon-economic-compulsion.jpg?v=e1d5cfd8" alt="" width="205" height="205" />
+                <img class="card__icon" src="assets/images/icon-economic-compulsion.png?v=fs090" alt="" width="400" height="400" />
                 <p id="text12"><strong>Economic Compulsion.</strong><br /> High energy prices, particularly in Europe, make efficiency economically valuable independent of regulation. In our initial addressable segment alone, every percentage point of engine efficiency adds approximately €4M in annual revenue at scale. In grid-constrained markets like Frankfurt and London, every recovered MW unlocks compute capacity worth far more than retail electricity.</p>
               </div>
               <div class="card">
-                <img class="card__icon" src="assets/images/icon-commercial-validation.jpg?v=e1d5cfd8" alt="" width="203" height="203" />
+                <img class="card__icon" src="assets/images/icon-commercial-validation.png?v=fs090" alt="" width="400" height="400" />
                 <p id="text24"><strong>Commercial Validation.</strong><br /> We have already secured three signed LOIs with deployment partners Deep Green, Leafcloud, and Heata, whose deployment pipelines represent up to 2.6 TWh of recoverable low-temperature waste heat, anchored by Deep Green's publicly stated 300 MW buildout across the UK and North America.</p>
               </div>
               <div class="card">
-                <img class="card__icon" src="assets/images/icon-regulation-mandates.jpg?v=e1d5cfd8" alt="" width="205" height="205" />
+                <img class="card__icon" src="assets/images/icon-regulation-mandates.png?v=fs090" alt="" width="400" height="400" />
                 <p id="text25"><strong>Binding Sustainability Mandates.</strong><br /> The EU’s Energy Efficiency Directive mandates energy performance reporting for data centres, with minimum standards planned for 2026. Germany’s Energy Efficiency Act requires new data centres to reuse waste heat, creating direct regulatory demand for energy recovery infrastructure.</p>
               </div>
             </div>
