@@ -106,10 +106,14 @@
      by test_rgb_tokens_match_hex — never drift one without the other. */
   --c-teal-rgb: 0, 127, 173;
   --c-green-rgb: 0, 154, 98;
-  /* The brand gradient is the logo's own sweep: lime at the upper left to blue at
-     the lower right, the blue stop at 82 %. The same stops live in
-     brand/assets/logo-fluxtech-icon.svg; test_grad_matches_the_logo keeps them equal. */
-  --grad: linear-gradient(115deg, #b5f200 0%, #0a6fe6 82%);
+  /* The brand gradient is the logo's sweep mirrored: the mark runs lime at the
+     upper left to blue at the lower right (115deg, blue stop at 82 %); type runs
+     blue at the lower left to lime at the upper right (65deg, blue holding the
+     first 18 %), its reflection across the vertical axis. The same two hexes live in
+     brand/assets/logo-fluxtech-icon.svg; test_grad_matches_the_logo keeps them equal.
+     Type, QR modules and slide fills take this token; the icon discs read the
+     mark's own direction from the SVG. */
+  --grad: linear-gradient(65deg, #0a6fe6 18%, #b5f200 100%);
   --font-head: "Poppins", system-ui, sans-serif;
   --font-body: "Source Code Pro", ui-monospace, monospace;
 }
@@ -463,11 +467,14 @@
            section backgrounds (which made the texture appear only on some
            sections). Keeps wrinkle intensity uniform across every section. */
         isolation: isolate;
-        /* Paper-wrinkle intensity in [0,1], read by ::before below. 1 = the
-           maximum: the value no-JS and reduced-motion visitors see. With JS
-           and motion allowed it starts at 0 (12 % of max) and the scroll
-           integrator in closing.html raises it per section. */
-        --paper: 1;
+        /* Paper-wrinkle intensity in [0,1], read by ::before below. 0.8 =
+           the texture as designed: the value no-JS and reduced-motion
+           visitors see, and where one full scroll through a section lands.
+           With JS and motion allowed it starts at 0 (12 % of that) and the
+           scroll integrator in closing.html raises it per section; a
+           visitor who scrolls back over a section takes it to 1, a fifth
+           deeper than designed. */
+        --paper: 0.8;
         scroll-margin-top: calc(var(--header-h) + 1rem);
         padding: clamp(3.25rem, 7vw, 5.5rem) 0;
         border-bottom: 1px solid var(--c-border);
@@ -483,8 +490,9 @@
          so wrinkle intensity is independent of the background colour. Finer, denser
          folds keep every section evenly textured (no occasional large creases).
          Sits behind the section content (z-index:-1). No extra request. Opacity
-         follows the section's --paper: 12 % of the 0.1 maximum at 0, the maximum
-         at 1 — the visitor's scrolling within the section integrates it up. */
+         follows the section's --paper: 12 % of the designed 0.1 at 0, the designed
+         value at 0.8 (one full pass), 1.22× it at 1 (scrolled back over) — the
+         visitor's scrolling within the section integrates it up. */
       .section::before {
         content: "";
         position: absolute;
@@ -493,7 +501,7 @@
         pointer-events: none;
         background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='700'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.030' numOctaves='4' seed='14' stitchTiles='stitch' result='n'/><feDiffuseLighting in='n' surfaceScale='2.8' diffuseConstant='1' lighting-color='%23ffffff' result='l'><feDistantLight azimuth='225' elevation='62'/></feDiffuseLighting><feColorMatrix in='l' type='matrix' values='0 0 0 0 0.102 0 0 0 0 0.114 0 0 0 0 0.129 -0.33 -0.34 -0.33 0 1' result='a'/><feComponentTransfer in='a'><feFuncA type='linear' slope='1.7' intercept='-0.10'/></feComponentTransfer></filter><rect width='700' height='700' filter='url(%23p)'/></svg>");
         background-size: 700px 700px;
-        opacity: calc(0.1 * (0.12 + 0.88 * var(--paper)));
+        opacity: calc(0.1 * (0.12 + 1.1 * var(--paper)));
       }
       @media (prefers-reduced-motion: no-preference) {
         html.js .section {
@@ -2200,10 +2208,11 @@
            viewport bottom, 1: its bottom at the viewport top). Every frame
            adds |Δp| to the section's accumulator A — down and up both
            count — and intensity f = min(1, 0.8·A) goes to the section's
-           --paper (head.html maps it to ::before opacity: 12 % of max at
-           0, max at 1). One full pass reaches 0.8; scrolling back
-           saturates at 1 and stays. Reduced motion: CSS keeps --paper at
-           1 (max) and nothing here runs.
+           --paper (head.html maps it to ::before opacity: 12 % of the
+           designed texture at 0, the designed texture at 0.8, a fifth
+           deeper at 1). One full pass reaches 0.8; scrolling back over
+           the section saturates at 1 and stays. Reduced motion: CSS keeps
+           --paper at 0.8 (as designed) and nothing here runs.
            --------------------------------------------------------------- */
         if (!prefersReducedMotion.matches) {
           var papers = SECTION_IDS.map(function (id) {

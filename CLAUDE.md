@@ -128,8 +128,9 @@ Reveals fire once via `IntersectionObserver` (then unobserve) and animate only
 The paper-wrinkle texture on every section (`.section::before` in `head.html`) integrates
 the visitor's scrolling within that section: its opacity follows the section's `--paper`
 custom property, which the `closing.html` integrator raises by `0.8 × Σ|Δp|` (p = the section's
-scroll-through progress, so one full pass gives 80 % of max, scrolling back saturates at max)
-from a rest value of 12 % of max. Reduced-motion and no-JS visitors get the maximum, static.
+scroll-through progress, so one full pass lands on the texture as designed, and scrolling back
+over the section saturates a fifth deeper) from a rest value of 12 % of the designed texture.
+Reduced-motion and no-JS visitors get the designed texture, static.
 
 ## Build Script Behavior
 

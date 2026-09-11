@@ -160,10 +160,11 @@
            viewport bottom, 1: its bottom at the viewport top). Every frame
            adds |Δp| to the section's accumulator A — down and up both
            count — and intensity f = min(1, 0.8·A) goes to the section's
-           --paper (head.html maps it to ::before opacity: 12 % of max at
-           0, max at 1). One full pass reaches 0.8; scrolling back
-           saturates at 1 and stays. Reduced motion: CSS keeps --paper at
-           1 (max) and nothing here runs.
+           --paper (head.html maps it to ::before opacity: 12 % of the
+           designed texture at 0, the designed texture at 0.8, a fifth
+           deeper at 1). One full pass reaches 0.8; scrolling back over
+           the section saturates at 1 and stays. Reduced motion: CSS keeps
+           --paper at 0.8 (as designed) and nothing here runs.
            --------------------------------------------------------------- */
         if (!prefersReducedMotion.matches) {
           var papers = SECTION_IDS.map(function (id) {
