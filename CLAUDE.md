@@ -1,9 +1,7 @@
 # FluxTech Website — flux-tech.de
 
-Single-page marketing site for FluxTech, hosted on GitHub Pages. It was originally
-exported from Carrd; that machine-generated substrate (the `.instance-N` classes and the
-`display:none` slide-switcher state machine) has since been **retired**. The site is now a
-hand-authored **continuous-scroll** page maintained via a content pipeline.
+Single-page marketing site for FluxTech, hosted on GitHub Pages: a hand-authored
+**continuous-scroll** page maintained via a content pipeline.
 
 **In this repo.** `build.py` pulls the brand surface from `fluxstyle` at build
 time: the brand-core `:root` tokens (`fluxstyle.brand_css()`, injected at the
@@ -84,13 +82,13 @@ equivalent exists. The build script passes these through unchanged.
 
 Paragraphs within a single YAML value are separated by `\n\n`. The build script wraps each
 paragraph in `<span class="p">...</span>`. These `.p` spans are styled by the stylesheet as
-block-level paragraphs (the old Carrd hard dependency is gone, but the wrapper is retained so
-multi-paragraph values get consistent spacing — including inside `.card` / `.feature-list`).
+block-level paragraphs, so multi-paragraph values get consistent spacing, including inside
+`.card` / `.feature-list`.
 
 ## HTML Structure & Navigation
 
-The page is **one continuous scroll**. There is no slide-switcher, no landing menu, and no
-per-section "Back" links. Each `sections/*.html` partial emits one
+The page is **one continuous scroll**, navigated by the header, the dot-nav and in-page
+anchors described below. Each `sections/*.html` partial emits one
 `<section id="…" class="section" tabindex="-1">`. Section `id`s (`home`, `problem`,
 `solution`, `prototype`, `businessmodel`, `physicsengineering`, `market`, `team`, `ask`) double
 as the in-page anchor targets used by the navigation and the `[here](#…)` cross-links in copy.
@@ -104,7 +102,8 @@ The navigation system (all CSS in `head.html`, all JS in `closing.html`):
 - **Scroll progress bar** — native CSS `animation-timeline: scroll()` where supported, with a
   small JS `scaleX` fallback otherwise.
 - **Side dot-nav** — fixed vertical column, one labelled `<a>` dot per section, desktop only
-  (hidden below 1180px). Driven by the same observer.
+  (hidden at `max-width: 85em`, where it would overlap the content). Driven by the same
+  observer.
 - **Smooth scroll + focus management** — a delegated click handler on `a[href^="#"]` scrolls
   the target into view (respecting `prefers-reduced-motion`) and moves keyboard focus to the
   target section (`tabindex="-1"` + `focus({preventScroll:true})`). `scroll-margin-top` on
@@ -152,8 +151,9 @@ python build.py --check      # Dry run: validate YAML keys match template placeh
 - Fonts: Poppins (headings, gradient text, nav, numbers) and Source Code Pro (body).
 - Brand palette and type tokens come from `fluxstyle` (`brand/tokens.css`), injected into
   `head.html`'s `<style>` at build time as the brand `:root` — never hand-typed here. The
-  teal-to-green gradient, ink, highlight, and the Poppins/Source Code Pro stacks all live
-  there; this repo adds only site-layout tokens and the `var(--c-*)` references that use them.
+  blue-to-lime `--grad` gradient, the solid teal and green accents, ink, highlight, and the
+  Poppins/Source Code Pro stacks all live there; this repo adds only site-layout tokens and
+  the `var(--c-*)` references that use them.
 - Section headings (`.h-section`) and the hero tagline use Poppins with a `background-clip:text`
   gradient fill. Body text (`.prose`) uses Source Code Pro.
 - All images live in `assets/images/` with descriptive kebab-case names. Every `<img>` carries
