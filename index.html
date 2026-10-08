@@ -26,7 +26,7 @@
     </script>
     <style>
       /* ===================================================================
-         FluxTech — continuous-scroll stylesheet (rebuilt 2026).
+         FluxTech: continuous-scroll stylesheet (rebuilt 2026).
          Replaces the Carrd-exported substrate (.instance-N classes + the
          display:none slide-switcher) with a single scrollable document.
          =================================================================== */
@@ -75,9 +75,9 @@
         border-radius: 2px;
       }
 
-      /* ---- Brand tokens: pulled from fluxstyle at build time — do not hand-edit ---- */
+      /* ---- Brand tokens: pulled from fluxstyle at build time, do not hand-edit ---- */
       /* ===================================================================
-   FluxTech brand-core tokens — the single source of truth for the
+   FluxTech brand-core tokens: the single source of truth for the
    brand identity (colours, the brand gradient, the two type families).
 
    This is the ONE place a brand hex value lives: the website and the
@@ -90,7 +90,7 @@
    Brand-core ONLY. Site layout tokens (--maxw, --header-h, --radius,
    --shadow, --measure) are site-specific and stay in the website.
    Document-layer accents (the neutral grey ramp, the orange document
-   accent) are NOT brand-core — they live in document.css.
+   accent) are NOT brand-core; they live in document.css.
    =================================================================== */
 :root {
   --c-ink: #1a1d21;
@@ -103,7 +103,7 @@
   --c-card: #ffffff;
   /* rgb triples of the two accent colours, for rgba() alpha forms in consumers
      (e.g. rgba(var(--c-teal-rgb), 0.28)). Held in lockstep with the hexes above
-     by test_rgb_tokens_match_hex — never drift one without the other. */
+     by test_rgb_tokens_match_hex: never drift one without the other. */
   --c-teal-rgb: 0, 127, 173;
   --c-green-rgb: 0, 154, 98;
   /* The brand gradient is the logo's sweep mirrored: the mark runs lime at the
@@ -317,7 +317,7 @@
         .primary-nav {
           margin-left: 0;
         }
-        /* Horizontally scrollable chip row — labels stay visible, high scent. */
+        /* Horizontally scrollable chip row: labels stay visible, high scent. */
         .primary-nav ul {
           gap: 0.5rem;
           overflow-x: auto;
@@ -343,7 +343,7 @@
       }
 
       /* ===================================================================
-         Side dot / chapter nav — desktop only
+         Side dot / chapter nav: desktop only
          =================================================================== */
       .dot-nav {
         position: fixed;
@@ -410,7 +410,7 @@
         transform: none;
       }
       /* Show the side dots only once the viewport is wide enough to clear the
-         content shell — otherwise they'd sit on top of the right-hand content. */
+         content shell; otherwise they'd sit on top of the right-hand content. */
       @media (max-width: 85em) {
         .dot-nav {
           display: none;
@@ -462,7 +462,7 @@
       .section {
         position: relative;
         /* Own stacking context so the paper-texture ::before (z-index:-1) stays
-           scoped to this section — above its background, below its content —
+           scoped to this section (above its background, below its content)
            instead of escaping to the root layer and hiding under opaque/tinted
            section backgrounds (which made the texture appear only on some
            sections). Keeps wrinkle intensity uniform across every section. */
@@ -486,12 +486,12 @@
          light gives a crease relief; a colour-matrix then maps the lit flats to
          transparent and the crease shadows to a translucent ink (--c-ink), so the
          texture carries ONLY the wrinkle shadows as alpha. Composited normally
-         (no blend mode) it lays the SAME shadow onto any section — white or tint —
+         (no blend mode) it lays the SAME shadow onto any section, white or tint,
          so wrinkle intensity is independent of the background colour. Finer, denser
          folds keep every section evenly textured (no occasional large creases).
          Sits behind the section content (z-index:-1). No extra request. Opacity
          follows the section's --paper: 12 % of the designed 0.1 at 0, the designed
-         value at 0.8 (one full pass), 1.22× it at 1 (scrolled back over) — the
+         value at 0.8 (one full pass), 1.22× it at 1 (scrolled back over); the
          visitor's scrolling within the section integrates it up. */
       .section::before {
         content: "";
@@ -726,7 +726,7 @@
         height: 100%;
         border: 0;
       }
-      /* Affiliations: two labelled groups stacked under the hero CTA —
+      /* Affiliations: two labelled groups stacked under the hero CTA:
          "Backed by" (programs/incubators) and "Deployment partners". */
       .hero__affiliations {
         margin: 2.75rem 0 0.75rem;
@@ -1001,7 +1001,7 @@
       }
 
       /* ===================================================================
-         Physics & Engineering walkthrough — numbered, sequenced steps
+         Physics & Engineering walkthrough: numbered, sequenced steps
          =================================================================== */
       .walkthrough {
         counter-reset: step;
@@ -1090,7 +1090,7 @@
       }
 
       /* ===================================================================
-         Video thumbnail — poster that opens the shared lightbox
+         Video thumbnail: poster that opens the shared lightbox
          =================================================================== */
       .video-thumb {
         position: relative;
@@ -2180,7 +2180,7 @@
         }
 
         /* ---------------------------------------------------------------
-           Scroll progress bar — JS fallback when the native scroll
+           Scroll progress bar: JS fallback when the native scroll
            timeline isn't available.
            --------------------------------------------------------------- */
         var supportsScrollTimeline = false;
@@ -2206,8 +2206,8 @@
            Paper wrinkle integrates scrolling, per section. p in [0,1] is
            how far a section has been scrolled through (0: its top at the
            viewport bottom, 1: its bottom at the viewport top). Every frame
-           adds |Δp| to the section's accumulator A — down and up both
-           count — and intensity f = min(1, 0.8·A) goes to the section's
+           adds |Δp| to the section's accumulator A (down and up both
+           count), and intensity f = min(1, 0.8·A) goes to the section's
            --paper (head.html maps it to ::before opacity: 12 % of the
            designed texture at 0, the designed texture at 0.8, a fifth
            deeper at 1). One full pass reaches 0.8; scrolling back over

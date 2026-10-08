@@ -15,7 +15,7 @@ Changes needed:
 - `text02`: Change "from ~€400k to ~€1M" to "from ~€460k to ~€1.2M"
 - `text34`: Change "From ~€400k to ~€1M" to "From ~€460k to ~€1.2M"
 
-**sections/ask.html — JavaScript constants in the `calc()` function:**
+**sections/ask.html: JavaScript constants in the `calc()` function:**
 - `FEAS_GRANT`: 140 → 175
 - `FEAS_COFUND`: 60 → 75
 - Change the ZIM R&D grant formula from `coFundAvail * (45 / 55)` to `coFundAvail * (50 / 50)` (i.e., just `coFundAvail`)
@@ -23,7 +23,7 @@ Changes needed:
 
 ## Constraints
 
-- Do not change any HTML structure, CSS, or chart configuration — only text content and JS constants.
+- Do not change any HTML structure, CSS, or chart configuration; only text content and JS constants.
 - Run `python build.py` after editing content.yaml.
 - Run `python build.py --check` to verify no orphaned placeholders.
 

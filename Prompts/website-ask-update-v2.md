@@ -53,7 +53,7 @@ Update the Architecture section and Content Pipeline section to reflect:
 
 - The output of `python build.py` after this refactor must produce byte-identical `index.html` to what the current pipeline produces. Diff them to verify.
 - Don't change `content.yaml`.
-- Don't rename any CSS classes or IDs — just split the file at section boundaries.
+- Don't rename any CSS classes or IDs; just split the file at section boundaries.
 - Keep all inline `<script>` and `<style>` blocks in whichever partial they belong to.
 
 ## Done When
@@ -135,7 +135,7 @@ effort: high
 
 ## What and Why
 
-Add an interactive grant leverage calculator to the Ask section as the hero element. Investors drag a slider to explore how their check size activates non-dilutive grants — stacked bar chart + live metric cards update in real time. Uses Chart.js from CDN.
+Add an interactive grant leverage calculator to the Ask section as the hero element. Investors drag a slider to explore how their check size activates non-dilutive grants: stacked bar chart + live metric cards update in real time. Uses Chart.js from CDN.
 
 ### Implementation
 
@@ -143,7 +143,7 @@ Edit `sections/ask.html` to:
 
 1. Add `<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>` near the top of the section partial (or in a script tag before the widget).
 2. Insert the widget HTML between the `{{text39}}` block (funding cascade intro) and the `{{text35}}` block (milestones).
-3. Hide the static `{{text06}}` and `{{text34}}` elements with `display: none` in a scoped style block — keep the placeholders so build.py doesn't break, but don't show the static text since the widget replaces it.
+3. Hide the static `{{text06}}` and `{{text34}}` elements with `display: none` in a scoped style block; keep the placeholders so build.py doesn't break, but don't show the static text since the widget replaces it.
 
 ### Widget structure
 
@@ -151,7 +151,7 @@ Edit `sections/ask.html` to:
 2. **Four metric cards** in a responsive row: Total dilutive, Total non-dilutive, Total deployment, Grant leverage. Dark card backgrounds, gradient accent on labels.
 3. **Stacked bar chart** (Chart.js). Stacks: Private capital (#5F5E5A), GründungsBONUS (#1D9E75), ZIM feasibility (#3266ad), ZIM R&D (#7F77DD). X-axis: check sizes €100k–€500k in €50k steps. Y-axis: total capital in €k.
 4. **Shaded "optimal zone"** overlay from €200k–€350k with a label, drawn via a Chart.js plugin.
-5. **Footer text**: "Next non-dilutive layer: SPRIND (up to €1M) · EIC Pathfinder (up to €3M) — no additional equity required"
+5. **Footer text**: "Next non-dilutive layer: SPRIND (up to €1M) · EIC Pathfinder (up to €3M), no additional equity required"
 
 ### Grant cascade formulas (embed exactly)
 
@@ -187,9 +187,9 @@ function calc(newCheckK) {
 ## Constraints
 
 - Only edit `sections/ask.html`. Do not modify `content.yaml`, `build.py`, or other section partials.
-- Chart.js loaded from `https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js` — no other external dependencies.
+- Chart.js loaded from `https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js`; no other external dependencies.
 - All widget JS inline within `sections/ask.html` (not a separate .js file).
-- Preserve all `{{placeholder}}` tokens in ask.html — build.py must still succeed.
+- Preserve all `{{placeholder}}` tokens in ask.html; build.py must still succeed.
 - Test with `python -m http.server 8000` (YouTube embeds and some features require HTTP, not file://).
 
 ## Done When

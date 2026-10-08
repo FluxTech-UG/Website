@@ -132,7 +132,7 @@
         }
 
         /* ---------------------------------------------------------------
-           Scroll progress bar — JS fallback when the native scroll
+           Scroll progress bar: JS fallback when the native scroll
            timeline isn't available.
            --------------------------------------------------------------- */
         var supportsScrollTimeline = false;
@@ -158,8 +158,8 @@
            Paper wrinkle integrates scrolling, per section. p in [0,1] is
            how far a section has been scrolled through (0: its top at the
            viewport bottom, 1: its bottom at the viewport top). Every frame
-           adds |Δp| to the section's accumulator A — down and up both
-           count — and intensity f = min(1, 0.8·A) goes to the section's
+           adds |Δp| to the section's accumulator A (down and up both
+           count), and intensity f = min(1, 0.8·A) goes to the section's
            --paper (head.html maps it to ::before opacity: 12 % of the
            designed texture at 0, the designed texture at 0.8, a fifth
            deeper at 1). One full pass reaches 0.8; scrolling back over

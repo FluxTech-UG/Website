@@ -55,7 +55,7 @@ def inject_brand(template):
     """Fill the fluxstyle markers in the assembled template: the brand-core
     :root tokens (brand_css) and the web-font <link> (font_link_tag). Both come
     from fluxstyle, so the site never re-types a brand hex, gradient, or font.
-    Fail loud if a marker is missing — a silently un-injected brand is the exact
+    Fail loud if a marker is missing: a silently un-injected brand is the exact
     drift consuming fluxstyle is meant to prevent.
     """
     for marker in (BRAND_TOKENS_MARKER, FONT_LINK_MARKER):
@@ -152,11 +152,11 @@ def process_value(value):
     paragraphs = re.split(r'\n\n', value)
 
     if len(paragraphs) == 1:
-        # Single paragraph — return as-is (no span wrapper needed;
+        # Single paragraph: return as-is (no span wrapper needed;
         # the template element may or may not use spans)
         return paragraphs[0]
 
-    # Multiple paragraphs — wrap each in <span class="p">
+    # Multiple paragraphs: wrap each in <span class="p">
     spans = []
     for p in paragraphs:
         p = p.strip()
@@ -189,7 +189,7 @@ def build(check_only=False):
 
     if orphaned_in_template:
         print(f"ERROR: Template placeholders with no matching YAML key: {sorted(orphaned_in_template)}")
-        print("Build blocked — these would appear as literal {{key}} text on the site.")
+        print("Build blocked: these would appear as literal {{key}} text on the site.")
         sys.exit(1)
 
     if not missing_in_template:
