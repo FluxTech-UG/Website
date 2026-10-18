@@ -150,6 +150,8 @@ matching placeholder (and errors on orphaned placeholders).
 ```bash
 python build.py              # Build index.html from sections + content
 python build.py --check      # Dry run: validate YAML keys match template placeholders
+                             # and block copy holding a FORBIDDEN_PHRASES entry (build.py):
+                             # patent wording that is false until the filing exists
 ```
 
 ## Conventions

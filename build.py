@@ -8,6 +8,7 @@ markdown-style formatting, and injects content to produce index.html.
 Usage:
     python build.py            # Build index.html
     python build.py --check    # Dry run: validate YAML keys match template placeholders
+                               # and that no content value holds a FORBIDDEN_PHRASES entry
 """
 
 import os
@@ -36,6 +37,17 @@ SECTION_ORDER = [
 ]
 
 SECTIONS_DIR = "sections"
+
+# Public copy that is false until the priority patent filing exists (and, in Germany,
+# misleading advertising). Matched case-insensitively on whole words in every content
+# value; a hit blocks the build and the dry run. Retire a phrase here once it is true.
+FORBIDDEN_PHRASES = [
+    "patent pending",
+    "patented",
+    "filed",
+    "applied for",
+    "with counsel",
+]
 
 # Logo SVGs are single-sourced in fluxstyle; build.py copies them into
 # assets/images/ so the served files are generated, never hand-maintained.
@@ -165,6 +177,17 @@ def process_value(value):
     return ''.join(spans)
 
 
+def forbidden_phrase_hits(content):
+    """(key, phrase) for every content value holding a FORBIDDEN_PHRASES entry."""
+    hits = []
+    for key, value in content.items():
+        text = str(value)
+        for phrase in FORBIDDEN_PHRASES:
+            if re.search(r"\b" + re.escape(phrase) + r"\b", text, re.IGNORECASE):
+                hits.append((key, phrase))
+    return hits
+
+
 def find_template_placeholders(template):
     """Return all {{key}} placeholders found in template."""
     return set(re.findall(r'\{\{([^}]+)\}\}', template))
@@ -192,8 +215,16 @@ def build(check_only=False):
         print("Build blocked: these would appear as literal {{key}} text on the site.")
         sys.exit(1)
 
+    forbidden = forbidden_phrase_hits(content)
+    if forbidden:
+        for key, phrase in forbidden:
+            print(f"ERROR: {key}: contains \"{phrase}\", which is false until the patent is filed.")
+        print("Build blocked: remove the phrase or retire it from FORBIDDEN_PHRASES in build.py.")
+        sys.exit(1)
+
     if not missing_in_template:
-        print(f"OK: {len(yaml_keys)} YAML keys match {len(placeholders)} template placeholders.")
+        print(f"OK: {len(yaml_keys)} YAML keys match {len(placeholders)} template placeholders; "
+              f"no forbidden phrase in the copy.")
 
     if check_only:
         sys.exit(0)
