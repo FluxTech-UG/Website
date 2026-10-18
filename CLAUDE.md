@@ -163,27 +163,33 @@ python build.py --check      # Dry run: validate YAML keys match template placeh
   Poppins/Source Code Pro stacks all live there; this repo adds only site-layout tokens and
   the `var(--c-*)` references that use them.
 - Section headings (`.h-section`) and the hero tagline are 3D blocks: the text sits in a
-  `.face` span with the `background-clip:text` gradient fill. A section title's sides are
-  its `::before`, two fading `text-shadow` steps drawn from a `data-text` copy of the same
-  content key (the build fills both), so a new section heading carries
-  `data-text="{{key}}"` and the `.face` span or it renders flat. The hero line's sides are
-  24 `.side` spans the `closing.html` script inserts behind the face from its `data-text`, a
-  quarter pixel apart (`--side-step`), each the gradient under a deepening cold-dark veil
-  (`--side-veil-rgb`, a site token), and the line leans back nine degrees. Body text
-  (`.prose`) uses Source Code Pro.
+  `.face` span with the `background-clip:text` gradient fill under a per-line sheen that is
+  neutral at the seam between lines (so a descender crossing it takes no strip of the next
+  line's highlight). A section title's sides are its `::before`, two fading `text-shadow`
+  steps drawn from a `data-text` copy of the same content key (the build fills both), so a
+  new section heading carries `data-text="{{key}}"` and the `.face` span or it renders flat.
+  The hero line's sides are `.side` spans the `closing.html` script inserts behind the face
+  from its `data-text`, each the gradient under a cold-dark veil; their count, depth, veil
+  range and curve are the `--side-*` custom properties on `.hero__tagline` in `head.html`
+  (the script reads them), and the line leans back four degrees. Body text (`.prose`) uses
+  Source Code Pro.
 - All images live in `assets/images/` with descriptive kebab-case names. Every `<img>` carries
   explicit `width`/`height` (intrinsic pixels) so reveals and late media don't cause layout
   shift (CLS).
 - **Logo**: three transparent SVGs single-sourced in `fluxstyle` and copied into
   `assets/images/` by `build.py` (`fluxstyle.logo_path()`); derived from one master lockup
   (gradient icon over wordmark):
-  - `logo-fluxtech.svg`: full stacked lockup → **hero**.
-  - `logo-fluxtech-icon.svg`: gradient icon only → **header** mark, **Status** mark, **favicon**.
+  - `logo-fluxtech.svg`: full stacked lockup (copied in, not placed on the page at present).
+  - `logo-fluxtech-icon.svg`: gradient icon only → **hero** mark, **header** mark, **Status**
+    mark, **favicon**. The swirl is a cut-out, so it takes the colour behind it: the hero's
+    dark band (`--hero-bg-rgb`) on the hero, white in the header.
   - `logo-fluxtech-wordmark.svg`: "FluxTech." as outlined black (`#1a1d21`) paths, Poppins
-    SemiBold, no font dependency → **header** wordmark.
+    SemiBold, no font dependency → **header** wordmark, and the **hero** wordmark turned
+    white by a CSS filter (`.hero__logo-word`) on the dark band.
 
   The header brand is the icon + wordmark composed side by side via the `.brand` flex row (each
-  sized independently: `.brand__icon`, `.brand__word`). The wordmark is intentionally **black**,
+  sized independently: `.brand__icon`, `.brand__word`); the hero stacks the same two files
+  (`.hero__logo`) the way the master lockup stacks them. The wordmark is intentionally **black**,
   not the page's teal-green gradient. All three share one coordinate space (`userSpaceOnUse`
   gradient), so if the mark changes, re-crop the variants from the master with their bounding
   boxes rather than editing each by hand.

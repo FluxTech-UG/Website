@@ -87,6 +87,7 @@
         --radius: 14px;
         --shadow: 0 1px 2px rgba(16, 30, 28, 0.04), 0 8px 28px rgba(16, 30, 28, 0.06);
         --side-veil-rgb: 10, 20, 30; /* the hero block's sides darken toward this cold dark */
+        --hero-bg-rgb: 15, 20, 24; /* the dark band behind the logo and the hero line */
       }
       @media (max-width: 760px) {
         :root {
@@ -564,13 +565,15 @@
          same content key) drawn only as two fading text-shadow steps, a cast
          shadow more than a block.
          Hero line: the sides are .side spans the closing.html script builds
-         from data-text (24 of them, a quarter pixel apart, so the side reads
-         as one continuous surface rather than steps), each the brand gradient
-         under a veil of cold dark that thickens with depth (--k the layer
-         index, --a the veil's opacity), so every letter's own colour runs into
-         its side and ends blue-black at the far edge; the whole line leans
-         back nine degrees so the block stands on the page. Without the script
-         the hero shows the face alone. */
+         from data-text (--side-n of them spread over --side-depth, close
+         enough that the side reads as one continuous surface), each the
+         brand gradient under a veil of cold dark (--side-veil-rgb) whose
+         opacity runs from --side-veil-near at the face to --side-veil-far at
+         the far edge along the curve t^--side-curve (--k the layer index,
+         --a the opacity, both set by the script), so every letter's own
+         colour runs into its side; the whole line leans back four degrees so
+         the block stands on the page. Without the script the hero shows the
+         face alone. */
       .h-section,
       .hero__tagline {
         position: relative;
@@ -578,10 +581,16 @@
       }
       /* The face is a block so the gradient spans the heading's whole box the
          way it did on the flat heading (the text centred in the middle of the
-         sweep), not the lines laid end to end. Over the gradient sits a sheen one line tall,
-         repeated down the block: each row of letters is lit from the top and
-         deepens toward its baseline, the gloss of the logo mark, and the face
-         stays bright beside the dark sides. --lh is the class's line-height. */
+         sweep), not the lines laid end to end. Over the gradient sits a sheen
+         one line tall, repeated down the block: each row of letters is lit
+         from the top and deepens toward its baseline, the gloss of the logo
+         mark, and the face stays bright beside the dark sides. The sheen is
+         neutral at both ends of its tile, so the seam between one line and
+         the next carries no jump: a descender crossing it (the g of
+         "Converting") takes no strip of the next line's highlight. Its
+         stops sit where the glyphs are: cap tops near 19 % of the line,
+         baseline near 81 %, the last fifth descenders only. --lh is the
+         class's line-height. */
       .h-section > .face,
       .hero__tagline > .face,
       .hero__tagline > .side {
@@ -597,17 +606,25 @@
         background-image:
           linear-gradient(
             180deg,
-            rgba(255, 255, 255, 0.34) 0%,
-            rgba(255, 255, 255, 0.12) 38%,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, var(--sheen-top)) 19%,
+            rgba(255, 255, 255, var(--sheen-mid)) 40%,
             rgba(255, 255, 255, 0) 58%,
-            rgba(0, 0, 0, 0.08) 100%
+            rgba(0, 0, 0, var(--sheen-base)) 81%,
+            rgba(0, 0, 0, 0) 100%
+          ),
+          linear-gradient(
+            color-mix(in srgb, var(--c-ink) calc(var(--face-veil) * 100%), transparent),
+            color-mix(in srgb, var(--c-ink) calc(var(--face-veil) * 100%), transparent)
           ),
           var(--grad);
-        background-size: auto var(--lh), auto;
-        background-repeat: repeat-y, no-repeat;
+        background-size: auto var(--lh), auto, auto;
+        background-repeat: repeat-y, no-repeat, no-repeat;
       }
-      .h-section { --lh: 1.15em; }
-      .hero__tagline { --lh: 1.12em; }
+      /* Sheen strengths at the glyph positions (cap top, mid, baseline) and
+         an ink veil over the whole face; the hero line runs darker. */
+      .h-section { --lh: 1.15em; --sheen-top: 0.22; --sheen-mid: 0.08; --sheen-base: 0.05; --face-veil: 0; }
+      .hero__tagline { --lh: 1.12em; --sheen-top: 0.22; --sheen-mid: 0.08; --sheen-base: 0.19; --face-veil: 0.02; }
       .h-section::before {
         content: attr(data-text);
         content: attr(data-text) / "";
@@ -624,8 +641,13 @@
           2px 2px 0 color-mix(in srgb, var(--c-ink) 28%, transparent);
       }
       .hero__tagline {
-        --side-step: 0.25px; /* distance between side layers; 24 layers = 6px deep */
-        transform: perspective(700px) rotateX(9deg);
+        --side-n: 24;
+        --side-depth: 4px;
+        --side-veil-near: 0.13;
+        --side-veil-far: 0.75;
+        --side-curve: 0.8;
+        --side-step: calc(var(--side-depth) / var(--side-n));
+        transform: perspective(700px) rotateX(4deg);
         transform-origin: 50% 100%;
       }
       .hero__tagline > .side {
@@ -634,7 +656,8 @@
         z-index: 0;
         pointer-events: none;
         user-select: none;
-        transform: translate(calc(var(--k) * var(--side-step)), calc(var(--k) * var(--side-step)));
+        /* the light sits upper left, a little higher than 45 degrees */
+        transform: translate(calc(var(--k) * var(--side-step)), calc(var(--k) * var(--side-step) * 0.8));
         background-image:
           linear-gradient(rgba(var(--side-veil-rgb), var(--a)), rgba(var(--side-veil-rgb), var(--a))),
           var(--grad);
@@ -706,16 +729,39 @@
       .hero {
         position: relative;
         text-align: center;
-        padding-top: clamp(2.5rem, 6vw, 4rem);
-        background:
-          radial-gradient(60% 60% at 50% 0%, rgba(var(--c-green-rgb), 0.08), rgba(255, 255, 255, 0)),
-          #ffffff;
+        padding-top: 0; /* the dark band sits flush under the header */
+        background: #ffffff;
       }
+      /* The dark band: logo and hero line on near-black, full width, flush
+         under the header. The rest of the hero stays white. */
+      .hero__top {
+        background: rgb(var(--hero-bg-rgb));
+        padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(2.5rem, 5vw, 3.5rem);
+      }
+      .hero__lower {
+        padding-top: clamp(2rem, 5vw, 3rem);
+        background: radial-gradient(60% 60% at 50% 0%, rgba(var(--c-green-rgb), 0.08), rgba(255, 255, 255, 0));
+      }
+      /* The hero lockup: the icon over the wordmark, the two SVGs stacked the
+         way the master lockup stacks them. The wordmark SVG is ink; the filter
+         turns it white for the dark band without a second file. */
       .hero__logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.6rem;
         width: 13rem;
         max-width: 70%;
-        height: auto;
         margin: 0 auto 1.75rem;
+      }
+      .hero__logo-icon {
+        width: 60%;
+        height: auto;
+      }
+      .hero__logo-word {
+        width: 100%;
+        height: auto;
+        filter: brightness(0) invert(1);
       }
       .hero__tagline {
         font-family: var(--font-head);
@@ -724,7 +770,7 @@
         line-height: 1.12;
         letter-spacing: -0.02em;
         max-width: 22ch;
-        margin: 0 auto 1.5rem;
+        margin: 0 auto;
       }
       .hero__body {
         max-width: 44ch;

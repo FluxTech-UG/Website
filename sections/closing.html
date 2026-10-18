@@ -89,21 +89,25 @@
           document.querySelectorAll('.primary-nav a, .dot-nav a, .brand')
         );
 
-        /* Hero block sides: 24 copies of the tagline behind its face, each a
-           quarter pixel further down-right and under a thicker veil (see the
-           3D headings notes in head.html). --a follows (k/n)^0.8 so the veil
-           builds quickly next to the face and ends solid at the far edge. */
+        /* Hero block sides: copies of the tagline behind its face, each a
+           little further down-right and under a thicker veil; the counts,
+           depth and curve are the custom properties on .hero__tagline in
+           head.html, read here so the CSS stays the one place they live. */
         var hero = document.querySelector(".hero__tagline[data-text]");
         if (hero) {
-          var SIDES = 24;
+          var heroStyle = getComputedStyle(hero);
+          var num = function (name) { return parseFloat(heroStyle.getPropertyValue(name)); };
+          var SIDES = num("--side-n");
+          var near = num("--side-veil-near"), far = num("--side-veil-far"), curve = num("--side-curve");
           var face = hero.querySelector(".face");
           for (var k = SIDES; k >= 1; k--) {
             var side = document.createElement("span");
             side.className = "side";
             side.setAttribute("aria-hidden", "true");
             side.textContent = hero.getAttribute("data-text");
+            var t = (k - 1) / (SIDES - 1);
             side.style.setProperty("--k", String(k));
-            side.style.setProperty("--a", Math.pow(k / SIDES, 0.8).toFixed(3));
+            side.style.setProperty("--a", (near + (far - near) * Math.pow(t, curve)).toFixed(3));
             hero.insertBefore(side, face);
           }
         }
