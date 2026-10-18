@@ -550,11 +550,80 @@
         font-size: clamp(1.7rem, 4vw, 2.35rem);
         line-height: 1.15;
         letter-spacing: -0.015em;
-        background: var(--grad);
+        margin-bottom: 1.5rem;
+      }
+      /* ---- 3D headings ----
+         The hero line and every section title are blocks lifted off the page.
+         The heading's text sits in a .face span that carries the gradient; the
+         block's sides are the ::before pseudo-element behind it, a copy of the
+         text from data-text (the build fills both from the same content key)
+         drawn only as stacked text-shadows stepping down and to the right, the
+         light coming from the upper left. The face is the real text, so a
+         browser without the pseudo still shows the heading. Section titles:
+         two steps, fading, a cast shadow more than a block. Hero line: five
+         solid ink steps and a soft contact shadow, the whole line leaning back
+         nine degrees so the block stands on the page. */
+      .h-section,
+      .hero__tagline {
+        position: relative;
+        isolation: isolate;
+      }
+      /* The face is a block so the gradient spans the heading's whole box the
+         way it did on the flat heading (the text centred in the middle of the
+         sweep), not the lines laid end to end. Over the gradient sits a sheen one line tall,
+         repeated down the block: each row of letters is lit from the top and
+         deepens toward its baseline, the gloss of the logo mark, and the face
+         stays bright beside the dark sides. --lh is the class's line-height. */
+      .h-section > .face,
+      .hero__tagline > .face {
+        position: relative;
+        z-index: 1;
+        display: block;
+        background-image:
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.34) 0%,
+            rgba(255, 255, 255, 0.12) 38%,
+            rgba(255, 255, 255, 0) 58%,
+            rgba(0, 0, 0, 0.08) 100%
+          ),
+          var(--grad);
+        background-size: auto var(--lh), auto;
+        background-repeat: repeat-y, no-repeat;
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        margin-bottom: 1.5rem;
+      }
+      .h-section { --lh: 1.15em; }
+      .hero__tagline { --lh: 1.12em; }
+      .h-section::before,
+      .hero__tagline::before {
+        content: attr(data-text);
+        content: attr(data-text) / "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        color: transparent;
+        pointer-events: none;
+        user-select: none;
+      }
+      .h-section::before {
+        text-shadow:
+          1px 1px 0 color-mix(in srgb, var(--c-ink) 55%, transparent),
+          2px 2px 0 color-mix(in srgb, var(--c-ink) 28%, transparent);
+      }
+      .hero__tagline {
+        transform: perspective(700px) rotateX(9deg);
+        transform-origin: 50% 100%;
+      }
+      .hero__tagline::before {
+        text-shadow:
+          1px 1px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
+          2px 2px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
+          3px 3px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
+          4px 4px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
+          5px 5px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
+          6px 8px 3px rgba(16, 30, 28, 0.18);
       }
       .prose {
         font-family: var(--font-body);
@@ -642,10 +711,6 @@
         letter-spacing: -0.02em;
         max-width: 22ch;
         margin: 0 auto 1.5rem;
-        background: var(--grad);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
       }
       .hero__body {
         max-width: 44ch;
@@ -715,8 +780,9 @@
         height: 100%;
         border: 0;
       }
-      /* Affiliations: two labelled groups stacked under the hero CTA:
-         "Backed by" (programs/incubators) and "Deployment partners". */
+      /* Affiliations: three labelled groups stacked under the hero CTA:
+         "Backed by" (the two labs: MotionLab, Earlybird Vision Lab), "Supported by"
+         (programmes and in-kind support) and "Deployment partners". */
       .hero__affiliations {
         margin: 2.75rem 0 0.75rem;
         display: flex;
@@ -780,6 +846,11 @@
          shorter to keep their on-screen width in line with the other marks. */
       .partner--motionlab {
         height: 2.75rem;
+      }
+      /* The Vision Lab wordmark is a heavy lowercase set with no mark, so it is
+         set shorter than MotionLab to read at the same weight. */
+      .partner--visionlab {
+        height: 2rem;
       }
       .partner--fel {
         height: 3.75rem;
