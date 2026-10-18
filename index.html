@@ -590,11 +590,80 @@
         font-size: clamp(1.7rem, 4vw, 2.35rem);
         line-height: 1.15;
         letter-spacing: -0.015em;
-        background: var(--grad);
+        margin-bottom: 1.5rem;
+      }
+      /* ---- 3D headings ----
+         The hero line and every section title are blocks lifted off the page.
+         The heading's text sits in a .face span that carries the gradient; the
+         block's sides are the ::before pseudo-element behind it, a copy of the
+         text from data-text (the build fills both from the same content key)
+         drawn only as stacked text-shadows stepping down and to the right, the
+         light coming from the upper left. The face is the real text, so a
+         browser without the pseudo still shows the heading. Section titles:
+         two steps, fading, a cast shadow more than a block. Hero line: five
+         solid ink steps and a soft contact shadow, the whole line leaning back
+         nine degrees so the block stands on the page. */
+      .h-section,
+      .hero__tagline {
+        position: relative;
+        isolation: isolate;
+      }
+      /* The face is a block so the gradient spans the heading's whole box the
+         way it did on the flat heading (the text centred in the middle of the
+         sweep), not the lines laid end to end. Over the gradient sits a sheen one line tall,
+         repeated down the block: each row of letters is lit from the top and
+         deepens toward its baseline, the gloss of the logo mark, and the face
+         stays bright beside the dark sides. --lh is the class's line-height. */
+      .h-section > .face,
+      .hero__tagline > .face {
+        position: relative;
+        z-index: 1;
+        display: block;
+        background-image:
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.34) 0%,
+            rgba(255, 255, 255, 0.12) 38%,
+            rgba(255, 255, 255, 0) 58%,
+            rgba(0, 0, 0, 0.08) 100%
+          ),
+          var(--grad);
+        background-size: auto var(--lh), auto;
+        background-repeat: repeat-y, no-repeat;
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        margin-bottom: 1.5rem;
+      }
+      .h-section { --lh: 1.15em; }
+      .hero__tagline { --lh: 1.12em; }
+      .h-section::before,
+      .hero__tagline::before {
+        content: attr(data-text);
+        content: attr(data-text) / "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        color: transparent;
+        pointer-events: none;
+        user-select: none;
+      }
+      .h-section::before {
+        text-shadow:
+          1px 1px 0 color-mix(in srgb, var(--c-ink) 55%, transparent),
+          2px 2px 0 color-mix(in srgb, var(--c-ink) 28%, transparent);
+      }
+      .hero__tagline {
+        transform: perspective(700px) rotateX(9deg);
+        transform-origin: 50% 100%;
+      }
+      .hero__tagline::before {
+        text-shadow:
+          1px 1px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
+          2px 2px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
+          3px 3px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
+          4px 4px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
+          5px 5px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
+          6px 8px 3px rgba(16, 30, 28, 0.18);
       }
       .prose {
         font-family: var(--font-body);
@@ -682,10 +751,6 @@
         letter-spacing: -0.02em;
         max-width: 22ch;
         margin: 0 auto 1.5rem;
-        background: var(--grad);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
       }
       .hero__body {
         max-width: 44ch;
@@ -755,8 +820,9 @@
         height: 100%;
         border: 0;
       }
-      /* Affiliations: two labelled groups stacked under the hero CTA:
-         "Backed by" (programs/incubators) and "Deployment partners". */
+      /* Affiliations: three labelled groups stacked under the hero CTA:
+         "Backed by" (the two labs: MotionLab, Earlybird Vision Lab), "Supported by"
+         (programmes and in-kind support) and "Deployment partners". */
       .hero__affiliations {
         margin: 2.75rem 0 0.75rem;
         display: flex;
@@ -820,6 +886,11 @@
          shorter to keep their on-screen width in line with the other marks. */
       .partner--motionlab {
         height: 2.75rem;
+      }
+      /* The Vision Lab wordmark is a heavy lowercase set with no mark, so it is
+         set shorter than MotionLab to read at the same weight. */
+      .partner--visionlab {
+        height: 2rem;
       }
       .partner--fel {
         height: 3.75rem;
@@ -1378,7 +1449,7 @@
             width="608"
             height="542"
           />
-          <h1 id="text15" class="hero__tagline">Converting AI data centre waste heat into electricity.</h1>
+          <h1 id="text15" class="hero__tagline" data-text="Converting AI data centre waste heat into electricity."><span class="face">Converting AI data centre waste heat into electricity.</span></h1>
           <div id="text26" class="prose hero__body reveal"><span class="p">Data centers are the energy infrastructure challenge of our time. Currently, their excess heat is vented as waste. But we see it as a fuel source.</span><span class="p">Our technology will harvest data centre heat as an asset and convert it back into electricity to power each AI data centre more efficiently and sustainably.</span><span class="p">We are building the new standard for energy recovery, from the physics up. <strong>Join us.</strong></span></div>
 
           <div class="hero__cta reveal">
@@ -1392,6 +1463,37 @@
           <div class="hero__affiliations reveal">
           <div class="partner-group" role="group" aria-labelledby="partner-group-backed">
           <p id="partner-group-backed" class="partner-group__label">Backed by</p>
+          <div class="hero__partners">
+            <a
+              href="https://motionlab.berlin/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--motionlab"
+                src="assets/images/logo-motionlab.png?v=e1d5cfd8"
+                alt="MotionLab Berlin"
+                width="360"
+                height="122"
+              />
+            </a>
+            <a
+              href="https://earlybird.com/vision-lab/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="partner--visionlab"
+                src="assets/images/logo-earlybird-visionlab.png"
+                alt="Vision Lab by Earlybird"
+                width="1178"
+                height="300"
+              />
+            </a>
+          </div>
+          </div>
+          <div class="partner-group" role="group" aria-labelledby="partner-group-support">
+          <p id="partner-group-support" class="partner-group__label">Supported by</p>
           <div class="hero__partners">
             <a
               href="https://startup.ovhcloud.com/en/"
@@ -1417,19 +1519,6 @@
                 alt="Onshape Startup Program by PTC"
                 width="1328"
                 height="814"
-              />
-            </a>
-            <a
-              href="https://motionlab.berlin/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                class="partner--motionlab"
-                src="assets/images/logo-motionlab.png?v=e1d5cfd8"
-                alt="MotionLab Berlin"
-                width="360"
-                height="122"
               />
             </a>
             <a
@@ -1518,13 +1607,13 @@
           </div>
           </div>
           </div>
-          <p id="text37" class="caption hero__caption">MotionLab Berlin hardtech accelerator graduates. Based at Future Energy Lab (dena, Berlin).</p>
+          <p id="text37" class="caption hero__caption">MotionLab Berlin hardtech accelerator graduates. Earlybird Vision Lab, cohort 8. Based at Future Energy Lab (dena, Berlin).</p>
         </div>
       </section>
       <section id="problem" class="section" tabindex="-1" aria-labelledby="text16">
         <div class="section__inner">
           <div class="section__head">
-            <h2 id="text16" class="h-section reveal">The Problem.</h2>
+            <h2 id="text16" class="h-section reveal" data-text="The Problem."><span class="face">The Problem.</span></h2>
           </div>
           <div class="section__body">
             <div id="text07" class="prose lede reveal"><span class="p">Data centres are the engine rooms of our time, yet they are running into a hard wall: power. Jensen Huang identifies it as the single biggest bottleneck for scaling AI. Data centres consumed 415 TWh of electricity in 2024, projected to reach 945 TWh by 2030 as AI workloads explode. That is nearly double Germany’s total annual electricity consumption.</span><span class="p">The constraint is not just total energy: it is the grid’s ability to deliver it. New data centres face multi-year waits for grid connections. Operators are hitting peak demand ceilings that limit how many racks they can fill. Every kilowatt-hour generated on-site is a kilowatt-hour not drawn from the grid, reducing dependency, lowering peak demand charges, and unlocking rack density that grid constraints currently block.</span><span class="p">Meanwhile, 10-30% of that consumed power goes to cooling, which vents heat as waste. All the while, the EU’s Energy Efficiency Directive mandates energy performance reporting for data centres, and Germany’s Energy Efficiency Act requires new data centres to reuse waste heat from July 2026. Regulation is compounding economic pressure that already exists.</span><span class="p">The heat is there. The need for power is desperate. No viable technology bridges the two.</span></div>
@@ -1546,7 +1635,7 @@
       <section id="solution" class="section" tabindex="-1" aria-labelledby="text11">
         <div class="section__inner">
           <div class="section__head">
-            <h2 id="text11" class="h-section reveal">The Solution.</h2>
+            <h2 id="text11" class="h-section reveal" data-text="The Solution."><span class="face">The Solution.</span></h2>
           </div>
           <div class="section__body">
             <div id="text36" class="prose reveal"><span class="p">FluxTech bridges the "Thermodynamic Dead Zone" by converting low-grade server heat into high-value electricity that can help power the data centre in a closed, sustainable loop. While legacy systems require temperatures above 80°C to function, our technology is intended to operate with high efficiency in the 40–65°C range common to modern data centres.</span><span class="p"><strong>The sCO₂ Advantage.</strong></span><span class="p">We utilize supercritical CO₂ (sCO₂) as a working fluid. Near its critical point, sCO₂ gains immense thermodynamic leverage: small temperature changes trigger massive state changes. This sensitivity allows us to extract energy where traditional turbines find only "waste".</span><span class="p"><strong>Engineered for Reliability.</strong></span><span class="p">Our thermoacoustic engine contains practically no moving parts. No turbines, no pistons, and minimal mechanical friction. By converting heat into acoustic waves to drive a linear alternator, we ensure operational longevity sustainably.</span><span class="p"><strong>AI-Driven Precision.</strong></span><span class="p">Operating near the CO₂ critical point is inherently nonlinear. FluxTech’s core proprietary technology utilizes real-time AI control systems to stabilize these dynamics, optimizing efficiency every second based on live operational data. This creates a technical moat: the hardware cannot function without the control system, and the system is trained on data unique to our architecture.</span><span class="p"><strong>Seamless Integration.</strong></span></div>
@@ -1557,7 +1646,7 @@
       <section id="prototype" class="section" tabindex="-1" aria-labelledby="text-prototype-title">
         <div class="section__inner">
           <div class="section__head">
-            <h2 id="text-prototype-title" class="h-section reveal">Working Prototype</h2>
+            <h2 id="text-prototype-title" class="h-section reveal" data-text="Working Prototype"><span class="face">Working Prototype</span></h2>
           </div>
           <div class="section__body">
             <button
@@ -1585,7 +1674,7 @@
       <section id="businessmodel" class="section" tabindex="-1" aria-labelledby="text-bm-title">
         <div class="section__inner">
           <div class="section__head">
-            <h2 id="text-bm-title" class="h-section reveal">The Business Model.</h2>
+            <h2 id="text-bm-title" class="h-section reveal" data-text="The Business Model."><span class="face">The Business Model.</span></h2>
           </div>
           <div class="section__body">
             <div id="text-bm-intro" class="prose lede reveal"><span class="p"><strong>Energy as a Service.</strong></span><span class="p">We install, own, and operate the hardware. Customers pay for every kWh generated from their waste heat. All performance risk sits with FluxTech. If the engine produces nothing, the customer pays nothing.</span><span class="p">The engine modulates between electricity recovery and heat delivery, capturing whichever revenue stream is paying more.</span><span class="p">This model aligns incentives across all three stakeholders: every efficiency improvement flows directly into revenue, with no intermediary step.</span></div>
@@ -1604,7 +1693,7 @@
       <section id="physicsengineering" class="section" tabindex="-1" aria-labelledby="text22">
         <div class="section__inner">
           <div class="section__head">
-            <h2 id="text22" class="h-section reveal">The Physics &amp; Engineering.</h2>
+            <h2 id="text22" class="h-section reveal" data-text="The Physics &amp; Engineering."><span class="face">The Physics &amp; Engineering.</span></h2>
           </div>
           <div class="section__body">
           <div id="text17" class="prose lede reveal">FluxTech's system is a closed-loop thermoacoustic engine. It connects to the data centre's cooling fluid on one side and produces electricity on the other. The sections below trace the conversion end to end.</div>
@@ -1670,7 +1759,7 @@
       <section id="market" class="section" tabindex="-1" aria-labelledby="text10">
         <div class="section__inner">
           <div class="section__head">
-            <h2 id="text10" class="h-section reveal">The Market.</h2>
+            <h2 id="text10" class="h-section reveal" data-text="The Market."><span class="face">The Market.</span></h2>
           </div>
           <div class="section__body">
             <div id="text27" class="prose lede reveal"><span class="p">The market for FluxTech’s technology is not just large, it is structurally inevitable due to the convergence of two things: surging demand for AI and the avoided load advantage.</span><span class="p">The scale of the opportunity is defined by the explosive growth of data centres, which are projected to consume 945 TWh of electricity by 2030, driven largely by energy-intensive AI workloads.</span><span class="p">The avoided load advantage is the ability to generate power on-site to bypass grid capacity constraints. By reducing the total draw from the grid, operators can lower peak demand charges that currently limit rack density.</span><span class="p">We are seeing immediate market pull for three specific reasons.</span></div>
@@ -1695,7 +1784,7 @@
       <section id="team" class="section" tabindex="-1" aria-labelledby="text32">
         <div class="section__inner">
           <div class="section__head">
-            <h2 id="text32" class="h-section reveal">The Team.</h2>
+            <h2 id="text32" class="h-section reveal" data-text="The Team."><span class="face">The Team.</span></h2>
           </div>
           <div class="section__body">
             <div class="team-grid">
@@ -1726,7 +1815,7 @@
       <section id="status" class="section" tabindex="-1" aria-labelledby="text-status-title">
         <div class="section__inner">
           <div class="section__head">
-            <h2 id="text-status-title" class="h-section reveal">Where We Stand.</h2>
+            <h2 id="text-status-title" class="h-section reveal" data-text="Where We Stand."><span class="face">Where We Stand.</span></h2>
           </div>
           <div class="section__body">
           <div id="text-status-lede" class="prose lede reveal"><span class="p"><strong>Building the engine and the science behind it.</strong></span><span class="p">Right now that means three things: preparing our priority patent filing, building the company in the Earlybird Vision Lab, and going deeper on the simulation work that drives the design.</span></div>
