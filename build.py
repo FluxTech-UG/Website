@@ -31,7 +31,7 @@ SECTION_ORDER = [
     "physicsengineering",
     "market",
     "team",
-    "ask",
+    "status",
     "closing",
 ]
 

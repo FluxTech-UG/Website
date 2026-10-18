@@ -621,7 +621,7 @@
       .text-center {
         text-align: center;
       }
-      .ask-mark {
+      .status-mark {
         display: block;
         width: 3.75rem;
         height: auto;
@@ -1313,7 +1313,7 @@
             <li><a href="#physicsengineering">Physics</a></li>
             <li><a href="#market">Market</a></li>
             <li><a href="#team">Team</a></li>
-            <li><a href="#ask">Ask</a></li>
+            <li><a href="#status">Status</a></li>
           </ul>
         </nav>
       </div>
@@ -1335,7 +1335,7 @@
         </li>
         <li><a href="#market"><span class="dot-nav__dot"></span><span class="dot-nav__label">Market</span></a></li>
         <li><a href="#team"><span class="dot-nav__dot"></span><span class="dot-nav__label">Team</span></a></li>
-        <li><a href="#ask"><span class="dot-nav__dot"></span><span class="dot-nav__label">Ask</span></a></li>
+        <li><a href="#status"><span class="dot-nav__dot"></span><span class="dot-nav__label">Status</span></a></li>
       </ul>
     </nav>
 
@@ -1350,7 +1350,7 @@
             height="542"
           />
           <h1 id="text15" class="hero__tagline">Converting AI data centre waste heat into electricity.</h1>
-          <div id="text26" class="prose hero__body reveal"><span class="p">Data centers are the energy infrastructure challenge of our time. Currently, their excess heat is vented as waste. But we see it as a fuel source.</span><span class="p">Our technology will harvest data centre heat as an asset and convert it back into electricity to power each AI data centre more efficiently and sustainably.</span><span class="p">As we move toward our MVP and initial pilots, we are building the new standard for energy recovery. <strong>Join us.</strong></span></div>
+          <div id="text26" class="prose hero__body reveal"><span class="p">Data centers are the energy infrastructure challenge of our time. Currently, their excess heat is vented as waste. But we see it as a fuel source.</span><span class="p">Our technology will harvest data centre heat as an asset and convert it back into electricity to power each AI data centre more efficiently and sustainably.</span><span class="p">We are building the new standard for energy recovery, from the physics up. <strong>Join us.</strong></span></div>
 
           <div class="hero__cta reveal">
             <button type="button" class="btn btn--primary" data-open-video data-video-id="6mLoOKX7IhY">
@@ -1694,355 +1694,25 @@
           </div>
         </div>
       </section>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-      <section id="ask" class="section" tabindex="-1" aria-labelledby="text03">
+      <section id="status" class="section" tabindex="-1" aria-labelledby="text-status-title">
         <div class="section__inner">
           <div class="section__head">
-            <h2 id="text03" class="h-section reveal">The Ask.</h2>
+            <h2 id="text-status-title" class="h-section reveal">Where We Stand.</h2>
           </div>
           <div class="section__body">
-          <div id="text02" class="prose lede reveal"><span class="p"><strong>Strategic Investment Round.</strong></span><span class="p">FluxTech is raising up to €500k to join committed capital.</span><span class="p">This is a leverage round. Every euro of equity activates a cascade of non-dilutive grants, scaling total deployment from ~€460k to ~€1.2M depending on round size.</span></div>
-          <div id="text39" class="prose reveal"><span class="p"><strong>The Funding Cascade.</strong></span><span class="p">This capital unlocks two parallel federal workstreams that transition FluxTech from feasibility to industrial readiness:</span></div>
-          <p id="text06" class="prose" style="display: none"><span class="p"><mark>GründungsBONUS Plus (Berlin)</mark>: Triggers up to €50k in matched grant funding directly from this private raise.</span><span class="p"><mark>Two ZIM Feasibility Studies (Federal)</mark>: Provides up to €175k in R&amp;D funding to validate our two primary technical risks.</span><span class="p"><mark>ZIM R&amp;D Kooperationsprojekt (Federal)</mark>: Scales with co-funding capacity. Up to €550k total for FluxTech across two R&amp;D projects plus up to €560k total for research partners.</span></p>
-          <p id="text34" class="prose" style="display: none">Total Strategic Deployment: From ~€460k to ~€1.2M, depending on round size.</p>
-
-          <!-- Grant Leverage Calculator Widget -->
-          <style>
-            .grant-widget {
-              font-family: 'Poppins', sans-serif;
-              max-width: 800px;
-              margin: 2em auto;
-              padding: 1.5em;
-              background: #1a1d21;
-              border-radius: 12px;
-              color: #fff;
-            }
-            .grant-widget * { box-sizing: border-box; }
-            .grant-widget h3 {
-              font-size: 1.1em;
-              font-weight: 600;
-              margin: 0 0 0.2em;
-              background: linear-gradient(135deg, #0096CE, #00B573);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              background-clip: text;
-            }
-            .grant-widget .gw-slider-row {
-              display: flex;
-              align-items: center;
-              gap: 1em;
-              margin-bottom: 1.2em;
-            }
-            .grant-widget .gw-slider-label {
-              font-size: 0.82em;
-              color: #aaa;
-              white-space: nowrap;
-            }
-            .grant-widget .gw-slider-value {
-              font-size: 1.3em;
-              font-weight: 700;
-              min-width: 80px;
-              text-align: right;
-              white-space: nowrap;
-            }
-            .grant-widget input[type="range"] {
-              -webkit-appearance: none;
-              appearance: none;
-              flex: 1;
-              height: 6px;
-              background: #333;
-              border-radius: 3px;
-              outline: none;
-              cursor: pointer;
-            }
-            .grant-widget input[type="range"]::-webkit-slider-thumb {
-              -webkit-appearance: none;
-              appearance: none;
-              width: 20px;
-              height: 20px;
-              border-radius: 50%;
-              background: linear-gradient(135deg, #0096CE, #00B573);
-              border: 2px solid #fff;
-              cursor: pointer;
-            }
-            .grant-widget input[type="range"]::-moz-range-thumb {
-              width: 20px;
-              height: 20px;
-              border-radius: 50%;
-              background: linear-gradient(135deg, #0096CE, #00B573);
-              border: 2px solid #fff;
-              cursor: pointer;
-            }
-            .grant-widget .gw-metrics {
-              display: grid;
-              grid-template-columns: 1fr 1fr 1fr 1fr;
-              gap: 0.8em;
-              margin-bottom: 1.2em;
-            }
-            @media (max-width: 600px) {
-              .grant-widget .gw-metrics {
-                grid-template-columns: 1fr 1fr;
-              }
-              .grant-widget .gw-slider-value {
-                font-size: 1em;
-                min-width: 60px;
-              }
-            }
-            .grant-widget .gw-card {
-              background: #25282d;
-              border-radius: 8px;
-              padding: 0.8em;
-              text-align: center;
-            }
-            .grant-widget .gw-card-label {
-              font-size: 0.7em;
-              text-transform: uppercase;
-              letter-spacing: 0.05em;
-              color: #888;
-              margin-bottom: 0.3em;
-            }
-            .grant-widget .gw-card-value {
-              font-size: 1.25em;
-              font-weight: 700;
-            }
-            .grant-widget .gw-card-value.accent {
-              background: linear-gradient(135deg, #0096CE, #00B573);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              background-clip: text;
-            }
-            .grant-widget .gw-legend {
-              display: flex;
-              flex-wrap: wrap;
-              gap: 1em;
-              margin-bottom: 0.8em;
-              font-size: 0.75em;
-              color: #aaa;
-            }
-            .grant-widget .gw-legend-item {
-              display: flex;
-              align-items: center;
-              gap: 0.4em;
-            }
-            .grant-widget .gw-legend-swatch {
-              width: 12px;
-              height: 12px;
-              border-radius: 2px;
-              display: inline-block;
-              flex-shrink: 0;
-            }
-            .grant-widget .gw-chart-wrap {
-              position: relative;
-              width: 100%;
-              height: 280px;
-            }
-            .grant-widget .gw-footer {
-              margin-top: 1em;
-              font-size: 0.75em;
-              color: #777;
-              text-align: center;
-              line-height: 1.5;
-            }
-          </style>
-
-          <div class="grant-widget reveal" id="grantWidget">
-            <h3>Grant Leverage Calculator</h3>
-
-            <div class="gw-slider-row">
-              <span class="gw-slider-label">Investment size</span>
-              <input type="range" id="gwSlider" min="100" max="500" step="10" value="250" aria-label="Investment size in thousands of euros" />
-              <span class="gw-slider-value" id="gwSliderVal">€250k</span>
-            </div>
-
-            <div class="gw-metrics">
-              <div class="gw-card">
-                <div class="gw-card-label">Total Dilutive</div>
-                <div class="gw-card-value" id="gwDilutive">—</div>
-              </div>
-              <div class="gw-card">
-                <div class="gw-card-label">Total Non-Dilutive</div>
-                <div class="gw-card-value" id="gwNonDilutive">—</div>
-              </div>
-              <div class="gw-card">
-                <div class="gw-card-label">Total Deployment</div>
-                <div class="gw-card-value" id="gwDeployment">—</div>
-              </div>
-              <div class="gw-card">
-                <div class="gw-card-label">Grant Leverage</div>
-                <div class="gw-card-value accent" id="gwLeverage">—</div>
-              </div>
-            </div>
-
-            <div class="gw-legend">
-              <span class="gw-legend-item"><span class="gw-legend-swatch" style="background:#5F5E5A"></span> Private Capital</span>
-              <span class="gw-legend-item"><span class="gw-legend-swatch" style="background:#1D9E75"></span> GründungsBONUS</span>
-              <span class="gw-legend-item"><span class="gw-legend-swatch" style="background:#3266ad"></span> ZIM Feasibility</span>
-              <span class="gw-legend-item"><span class="gw-legend-swatch" style="background:#7F77DD"></span> ZIM R&amp;D</span>
-            </div>
-
-            <div class="gw-chart-wrap">
-              <canvas id="gwChart"></canvas>
-            </div>
-
-            <div class="gw-footer">
-              Next non-dilutive layer: <strong>SPRIND</strong> (up to €1M) · <strong>EIC Pathfinder</strong> (up to €3M), no additional equity required
-            </div>
-          </div>
-
-          <script>
-          (function() {
-            /* ---- Grant cascade formulas ---- */
-            var COMMITTED = 55;
-            var BONUS = 50;
-            var FEAS_GRANT = 175;
-            var FEAS_COFUND = 75;
-            var OPERATING_RESERVE = 80;
-            var BUFFER = 20;
-
-            function calc(newCheckK) {
-              var totalDilutive = COMMITTED + newCheckK;
-              var coFundAvail = Math.max(0, totalDilutive - FEAS_COFUND - OPERATING_RESERVE - BUFFER);
-              var zimRD = Math.min(coFundAvail, 550);
-              var totalNonDilutive = BONUS + FEAS_GRANT + zimRD;
-              var totalDeployment = totalDilutive + totalNonDilutive;
-              var leverage = totalDeployment / totalDilutive;
-              return { totalDilutive: totalDilutive, zimRD: zimRD, totalNonDilutive: totalNonDilutive, totalDeployment: totalDeployment, leverage: leverage };
-            }
-
-            function fmt(v) { return '€' + Math.round(v) + 'k'; }
-
-            /* ---- Chart.js setup ---- */
-            var steps = [];
-            for (var s = 100; s <= 500; s += 50) steps.push(s);
-            var labels = steps.map(function(v) { return '€' + v + 'k'; });
-
-            /* Optimal zone plugin */
-            var optimalZonePlugin = {
-              id: 'optimalZone',
-              beforeDraw: function(chart) {
-                var ctx = chart.ctx;
-                var xScale = chart.scales.x;
-                var yScale = chart.scales.y;
-                /* €200k = index 2, €350k = index 5 */
-                var x1 = xScale.getPixelForValue(2);
-                var x2 = xScale.getPixelForValue(5);
-                ctx.save();
-                ctx.fillStyle = 'rgba(0,150,206,0.08)';
-                ctx.fillRect(x1, yScale.top, x2 - x1, yScale.bottom - yScale.top);
-                ctx.fillStyle = 'rgba(255,255,255,0.35)';
-                ctx.font = '11px Poppins, sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('Optimal Zone', (x1 + x2) / 2, yScale.top + 16);
-                ctx.restore();
-              }
-            };
-
-            function buildDatasets() {
-              var priv = [], bonus = [], feas = [], zim = [];
-              for (var i = 0; i < steps.length; i++) {
-                var r = calc(steps[i]);
-                priv.push(r.totalDilutive);
-                bonus.push(BONUS);
-                feas.push(FEAS_GRANT);
-                zim.push(Math.round(r.zimRD * 10) / 10);
-              }
-              return [
-                { label: 'Private Capital', data: priv, backgroundColor: '#5F5E5A' },
-                { label: 'GründungsBONUS', data: bonus, backgroundColor: '#1D9E75' },
-                { label: 'ZIM Feasibility', data: feas, backgroundColor: '#3266ad' },
-                { label: 'ZIM R&D', data: zim, backgroundColor: '#7F77DD' }
-              ];
-            }
-
-            var ctx = document.getElementById('gwChart').getContext('2d');
-            var chart = new Chart(ctx, {
-              type: 'bar',
-              data: { labels: labels, datasets: buildDatasets() },
-              plugins: [optimalZonePlugin],
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, tooltip: { enabled: true } },
-                scales: {
-                  x: {
-                    stacked: true,
-                    grid: { color: 'rgba(255,255,255,0.06)' },
-                    ticks: { color: '#888', font: { family: 'Poppins', size: 11 } }
-                  },
-                  y: {
-                    stacked: true,
-                    grid: { color: 'rgba(255,255,255,0.06)' },
-                    ticks: { color: '#888', font: { family: 'Poppins', size: 11 }, callback: function(v) { return '€' + v + 'k'; } },
-                    title: { display: true, text: 'Total Capital (€k)', color: '#888', font: { family: 'Poppins', size: 12 } }
-                  }
-                }
-              }
-            });
-
-            /* ---- Highlight current slider value bar ---- */
-            function highlightBar(checkK) {
-              var idx = steps.indexOf(checkK);
-              chart.data.datasets.forEach(function(ds) {
-                var colors = [];
-                for (var i = 0; i < steps.length; i++) {
-                  colors.push(i === idx ? ds.backgroundColor : ds.backgroundColor + '55');
-                }
-                ds.backgroundColor = colors;
-              });
-            }
-
-            /* ---- Update metrics ---- */
-            function update(checkK) {
-              var r = calc(checkK);
-              document.getElementById('gwSliderVal').textContent = fmt(checkK);
-              document.getElementById('gwDilutive').textContent = fmt(r.totalDilutive);
-              document.getElementById('gwNonDilutive').textContent = fmt(r.totalNonDilutive);
-              document.getElementById('gwDeployment').textContent = fmt(r.totalDeployment);
-              document.getElementById('gwLeverage').textContent = r.leverage.toFixed(2) + 'x';
-
-              /* Rebuild base colors before highlighting */
-              var ds = buildDatasets();
-              for (var i = 0; i < chart.data.datasets.length; i++) {
-                chart.data.datasets[i].data = ds[i].data;
-                chart.data.datasets[i].backgroundColor = ds[i].backgroundColor;
-              }
-              highlightBar(checkK);
-              chart.update();
-            }
-
-            /* Find nearest step for slider (step=10, chart step=50) */
-            function nearestStep(v) {
-              var best = steps[0];
-              for (var i = 1; i < steps.length; i++) {
-                if (Math.abs(steps[i] - v) < Math.abs(best - v)) best = steps[i];
-              }
-              return best;
-            }
-
-            /* ---- Slider listener ---- */
-            var slider = document.getElementById('gwSlider');
-            slider.addEventListener('input', function() {
-              update(parseInt(this.value, 10));
-            });
-
-            /* Initial render */
-            update(250);
-          })();
-          </script>
-          <!-- End Grant Leverage Calculator Widget -->
-
-          <div id="text35" class="prose reveal"><span class="p"><strong>Upcoming Milestones.</strong></span><span class="p">The funded program runs two parallel workstreams over a 12-month cycle to retire core research risks:</span></div>
-          <div id="text01" class="prose feature-list reveal"><span class="p"><mark>Feasibility Study 1 | Heat Modulation</mark>: Validates our controlled, phase-locked heat exchange on the existing research platform.</span><span class="p"><mark>Feasibility Study 2 | Near-Critical sCO₂</mark>: Integrates supercritical sCO₂ to activate the engine’s thermodynamic leverage at target temperatures.</span></div>
-          <div id="text38" class="prose reveal"><span class="p"><strong>The Technical Gate.</strong></span><span class="p">Successful completion of these studies positions FluxTech for the next funding layer. This includes SPRIND (up to €1M) and EIC Pathfinder (up to €3M), all without requiring additional equity.</span></div>
+          <div id="text-status-lede" class="prose lede reveal"><span class="p"><strong>Building the engine and the science behind it.</strong></span><span class="p">Right now that means three things: preparing our priority patent filing, building the company in the Earlybird Vision Lab, and going deeper on the simulation work that drives the design.</span></div>
+          <div id="text-status-intro" class="prose reveal"><strong>The record so far.</strong></div>
+          <div id="text-status-now" class="prose feature-list reveal"><span class="p"><mark>Berlin lab</mark> Research platform running: a travelling-wave thermoacoustic engine, end to end from heat in to electricity out, and the base for every upgrade we build on it.</span><span class="p"><mark>September 2026</mark> Earlybird Vision Lab, cohort 8.</span><span class="p"><mark>October 2026</mark> Federal patent grant (WIPANO) awarded. Priority filing in preparation.</span><span class="p"><mark>2026, open source</mark> <a href="https://github.com/FluxTech-UG/co2-eos">co2-eos</a>, a differentiable CO₂ equation of state in JAX, and <a href="https://github.com/FluxTech-UG/math-dept">math-dept</a>, a machine-checked ledger of the mathematics we rely on.</span></div>
+          <div id="text-status-outro" class="prose reveal">The engine architecture and its control stay private while the filing is prepared. What is general about the work, we publish.</div>
 
           <img
-            class="ask-mark reveal"
+            class="status-mark reveal"
             src="assets/images/logo-fluxtech-icon.svg"
             alt="FluxTech"
             width="363"
             height="357"
           />
-          <div id="text33" class="prose text-center reveal"><span class="p">We are looking for a partner who understands the value of entering at maximum leverage.</span><span class="p"><strong>Join Us.</strong></span><span class="p">Email <a href="mailto:john@flux-tech.de">john@flux-tech.de</a> to set up a meeting.</span></div>
+          <div id="text-status-contact" class="prose text-center reveal">Partners, operators and investors who want to follow our progress: email <a href="mailto:john@flux-tech.de">john@flux-tech.de</a>.</div>
           </div>
         </div>
       </section>
@@ -2099,7 +1769,7 @@
           "physicsengineering",
           "market",
           "team",
-          "ask",
+          "status",
         ];
 
         /* ---------------------------------------------------------------

@@ -25,7 +25,7 @@ text26: |
 
   Our technology will harvest data centre heat as an asset and convert it back into electricity to power each AI data centre more efficiently and sustainably.
 
-  As we move toward our MVP and initial pilots, we are building the new standard for energy recovery. **Join us.**
+  We are building the new standard for energy recovery, from the physics up. **Join us.**
 
 text-pitch-note: "Some details in the pitch have moved on since recording. See below for the latest."
 
@@ -214,50 +214,30 @@ text14: |
 
   *“We are not just managing heat, we are harvesting a previously invisible resource. Let’s turn the waste of today into the power of tomorrow.”*
 # ---------------------------------------------------------------------------
-# Ask Section
+# Status Section
 # ---------------------------------------------------------------------------
 
-text03: "The Ask."
+text-status-title: "Where We Stand."
 
-text02: |
-  **Strategic Investment Round.**
+text-status-lede: |
+  **Building the engine and the science behind it.**
 
-  FluxTech is raising up to €500k to join committed capital.
+  Right now that means three things: preparing our priority patent filing, building the company in the Earlybird Vision Lab, and going deeper on the simulation work that drives the design.
 
-  This is a leverage round. Every euro of equity activates a cascade of non-dilutive grants, scaling total deployment from ~€460k to ~€1.2M depending on round size.
+text-status-intro: |
+  **The record so far.**
 
-text39: |
-  **The Funding Cascade.**
+text-status-now: |
+  ==Berlin lab== Research platform running: a travelling-wave thermoacoustic engine, end to end from heat in to electricity out, and the base for every upgrade we build on it.
 
-  This capital unlocks two parallel federal workstreams that transition FluxTech from feasibility to industrial readiness:
+  ==September 2026== Earlybird Vision Lab, cohort 8.
 
-text06: |
-  ==GründungsBONUS Plus (Berlin)==: Triggers up to €50k in matched grant funding directly from this private raise.
+  ==October 2026== Federal patent grant (WIPANO) awarded. Priority filing in preparation.
 
-  ==Two ZIM Feasibility Studies (Federal)==: Provides up to €175k in R&D funding to validate our two primary technical risks.
+  ==2026, open source== [co2-eos](https://github.com/FluxTech-UG/co2-eos), a differentiable CO₂ equation of state in JAX, and [math-dept](https://github.com/FluxTech-UG/math-dept), a machine-checked ledger of the mathematics we rely on.
 
-  ==ZIM R&D Kooperationsprojekt (Federal)==: Scales with co-funding capacity. Up to €550k total for FluxTech across two R&D projects plus up to €560k total for research partners.
+text-status-outro: |
+  The engine architecture and its control stay private while the filing is prepared. What is general about the work, we publish.
 
-text34: "Total Strategic Deployment: From ~€460k to ~€1.2M, depending on round size."
-
-text35: |
-  **Upcoming Milestones.**
-
-  The funded program runs two parallel workstreams over a 12-month cycle to retire core research risks:
-
-text01: |
-  ==Feasibility Study 1 | Heat Modulation==: Validates our controlled, phase-locked heat exchange on the existing research platform.
-
-  ==Feasibility Study 2 | Near-Critical sCO₂==: Integrates supercritical sCO₂ to activate the engine’s thermodynamic leverage at target temperatures.
-
-text38: |
-  **The Technical Gate.**
-
-  Successful completion of these studies positions FluxTech for the next funding layer. This includes SPRIND (up to €1M) and EIC Pathfinder (up to €3M), all without requiring additional equity.
-
-text33: |
-  We are looking for a partner who understands the value of entering at maximum leverage.
-
-  **Join Us.**
-
-  Email [john@flux-tech.de](mailto:john@flux-tech.de) to set up a meeting.
+text-status-contact: |
+  Partners, operators and investors who want to follow our progress: email [john@flux-tech.de](mailto:john@flux-tech.de).

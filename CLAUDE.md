@@ -34,7 +34,7 @@ flux-tech.de/
 │   ├── physicsengineering.html # #physicsengineering: numbered walkthrough of 6 steps
 │   ├── market.html        # #market (3-card grid with icons)
 │   ├── team.html          # #team (member cards)
-│   ├── ask.html           # #ask: Chart.js grant-leverage widget (self-contained) + CTA
+│   ├── status.html        # #status: where the company stands now + contact
 │   └── closing.html       # Closes </main>, site footer + credits, back-to-top, shared video
 │                          #   lightbox, and ALL the page JS (scroll-spy, reveal, nav, etc.)
 ├── index.html             # Built output, served by GitHub Pages. NEVER edit directly
@@ -90,7 +90,7 @@ block-level paragraphs, so multi-paragraph values get consistent spacing, includ
 The page is **one continuous scroll**, navigated by the header, the dot-nav and in-page
 anchors described below. Each `sections/*.html` partial emits one
 `<section id="…" class="section" tabindex="-1">`. Section `id`s (`home`, `problem`,
-`solution`, `prototype`, `businessmodel`, `physicsengineering`, `market`, `team`, `ask`) double
+`solution`, `prototype`, `businessmodel`, `physicsengineering`, `market`, `team`, `status`) double
 as the in-page anchor targets used by the navigation and the `[here](#…)` cross-links in copy.
 
 The navigation system (all CSS in `head.html`, all JS in `closing.html`):
@@ -111,8 +111,9 @@ The navigation system (all CSS in `head.html`, all JS in `closing.html`):
 - **"Next" affordance** at the foot of each section advances to the next one in scroll order.
 - **Back-to-top** button, revealed once the hero scrolls out of view.
 
-`text*` IDs are legacy Carrd numbering (`text15`, `text26`, …); business-model/contract keys
-use semantic IDs (`text-bm-customer`, `text-heatmod`, …). YAML keys match these element IDs.
+`text*` IDs are legacy Carrd numbering (`text15`, `text26`, …); business-model, status and
+contract keys use semantic IDs (`text-bm-customer`, `text-status-now`, `text-heatmod`, …).
+YAML keys match these element IDs.
 
 ## Reveal-on-scroll & motion
 
@@ -163,7 +164,7 @@ python build.py --check      # Dry run: validate YAML keys match template placeh
   `assets/images/` by `build.py` (`fluxstyle.logo_path()`); derived from one master lockup
   (gradient icon over wordmark):
   - `logo-fluxtech.svg`: full stacked lockup → **hero**.
-  - `logo-fluxtech-icon.svg`: gradient icon only → **header** mark, **Ask** mark, **favicon**.
+  - `logo-fluxtech-icon.svg`: gradient icon only → **header** mark, **Status** mark, **favicon**.
   - `logo-fluxtech-wordmark.svg`: "FluxTech." as outlined black (`#1a1d21`) paths, Poppins
     SemiBold, no font dependency → **header** wordmark.
 
@@ -183,8 +184,9 @@ python build.py --check      # Dry run: validate YAML keys match template placeh
 - The `content.yaml` → `build.py` → `index.html` pipeline (YAML source of truth, `{{key}}`
   placeholder injection, `SECTION_ORDER`, key-validation). Keep markdown conversion and the
   `.p` paragraph wrapping working.
-- The **Ask** Chart.js grant-leverage widget in `sections/ask.html`: its `<style>`, markup,
-  and `<script>` are self-contained; keep them intact and the `Chart.js` CDN tag above it.
+- The **Status** section states where the company stands now and how to get in touch; it
+  carries no funding ask, no round figure and no grant arithmetic (the Funding repo's
+  posture is the source: `Funding/company/fluxtech-shared/SKILL.md`, Funding Posture).
 - The eight content sections + hero, all copy, the IEA chart, headshots, partner logos, icons,
   the heat-modulation diagram, and external links.
 - The navigation system and reveal/motion behaviour described above. If you add a section,
