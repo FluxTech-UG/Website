@@ -89,6 +89,25 @@
           document.querySelectorAll('.primary-nav a, .dot-nav a, .brand')
         );
 
+        /* Hero block sides: 24 copies of the tagline behind its face, each a
+           quarter pixel further down-right and under a thicker veil (see the
+           3D headings notes in head.html). --a follows (k/n)^0.8 so the veil
+           builds quickly next to the face and ends solid at the far edge. */
+        var hero = document.querySelector(".hero__tagline[data-text]");
+        if (hero) {
+          var SIDES = 24;
+          var face = hero.querySelector(".face");
+          for (var k = SIDES; k >= 1; k--) {
+            var side = document.createElement("span");
+            side.className = "side";
+            side.setAttribute("aria-hidden", "true");
+            side.textContent = hero.getAttribute("data-text");
+            side.style.setProperty("--k", String(k));
+            side.style.setProperty("--a", Math.pow(k / SIDES, 0.8).toFixed(3));
+            hero.insertBefore(side, face);
+          }
+        }
+
         /* Side dots: --n (count) on the nav, --i (index) on each item, so the
            CSS turns dot i by i/n of a rotation (see .dot-nav__dot in head.html). */
         var dotNav = document.querySelector(".dot-nav");

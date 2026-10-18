@@ -563,12 +563,14 @@
          face, a copy of the text from data-text (the build fills both from the
          same content key) drawn only as two fading text-shadow steps, a cast
          shadow more than a block.
-         Hero line: the sides are six .side spans in the markup (the same key,
-         aria-hidden), each the brand gradient under a veil of cold dark that
-         thickens with depth (--k 1..6, --a the veil's opacity), so every
-         letter's own colour runs into its side and ends blue-black at the far
-         edge; the whole line leans back nine degrees so the block stands on
-         the page. */
+         Hero line: the sides are .side spans the closing.html script builds
+         from data-text (24 of them, a quarter pixel apart, so the side reads
+         as one continuous surface rather than steps), each the brand gradient
+         under a veil of cold dark that thickens with depth (--k the layer
+         index, --a the veil's opacity), so every letter's own colour runs into
+         its side and ends blue-black at the far edge; the whole line leans
+         back nine degrees so the block stands on the page. Without the script
+         the hero shows the face alone. */
       .h-section,
       .hero__tagline {
         position: relative;
@@ -622,6 +624,7 @@
           2px 2px 0 color-mix(in srgb, var(--c-ink) 28%, transparent);
       }
       .hero__tagline {
+        --side-step: 0.25px; /* distance between side layers; 24 layers = 6px deep */
         transform: perspective(700px) rotateX(9deg);
         transform-origin: 50% 100%;
       }
@@ -631,7 +634,7 @@
         z-index: 0;
         pointer-events: none;
         user-select: none;
-        transform: translate(calc(var(--k) * 1px), calc(var(--k) * 1px));
+        transform: translate(calc(var(--k) * var(--side-step)), calc(var(--k) * var(--side-step)));
         background-image:
           linear-gradient(rgba(var(--side-veil-rgb), var(--a)), rgba(var(--side-veil-rgb), var(--a))),
           var(--grad);

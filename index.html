@@ -603,12 +603,14 @@
          face, a copy of the text from data-text (the build fills both from the
          same content key) drawn only as two fading text-shadow steps, a cast
          shadow more than a block.
-         Hero line: the sides are six .side spans in the markup (the same key,
-         aria-hidden), each the brand gradient under a veil of cold dark that
-         thickens with depth (--k 1..6, --a the veil's opacity), so every
-         letter's own colour runs into its side and ends blue-black at the far
-         edge; the whole line leans back nine degrees so the block stands on
-         the page. */
+         Hero line: the sides are .side spans the closing.html script builds
+         from data-text (24 of them, a quarter pixel apart, so the side reads
+         as one continuous surface rather than steps), each the brand gradient
+         under a veil of cold dark that thickens with depth (--k the layer
+         index, --a the veil's opacity), so every letter's own colour runs into
+         its side and ends blue-black at the far edge; the whole line leans
+         back nine degrees so the block stands on the page. Without the script
+         the hero shows the face alone. */
       .h-section,
       .hero__tagline {
         position: relative;
@@ -662,6 +664,7 @@
           2px 2px 0 color-mix(in srgb, var(--c-ink) 28%, transparent);
       }
       .hero__tagline {
+        --side-step: 0.25px; /* distance between side layers; 24 layers = 6px deep */
         transform: perspective(700px) rotateX(9deg);
         transform-origin: 50% 100%;
       }
@@ -671,7 +674,7 @@
         z-index: 0;
         pointer-events: none;
         user-select: none;
-        transform: translate(calc(var(--k) * 1px), calc(var(--k) * 1px));
+        transform: translate(calc(var(--k) * var(--side-step)), calc(var(--k) * var(--side-step)));
         background-image:
           linear-gradient(rgba(var(--side-veil-rgb), var(--a)), rgba(var(--side-veil-rgb), var(--a))),
           var(--grad);
@@ -1460,15 +1463,7 @@
             width="608"
             height="542"
           />
-          <h1 id="text15" class="hero__tagline">
-            <span class="side" aria-hidden="true" style="--k: 6; --a: 1.000">Converting AI data centre waste heat into electricity.</span>
-            <span class="side" aria-hidden="true" style="--k: 5; --a: 0.864">Converting AI data centre waste heat into electricity.</span>
-            <span class="side" aria-hidden="true" style="--k: 4; --a: 0.723">Converting AI data centre waste heat into electricity.</span>
-            <span class="side" aria-hidden="true" style="--k: 3; --a: 0.574">Converting AI data centre waste heat into electricity.</span>
-            <span class="side" aria-hidden="true" style="--k: 2; --a: 0.415">Converting AI data centre waste heat into electricity.</span>
-            <span class="side" aria-hidden="true" style="--k: 1; --a: 0.238">Converting AI data centre waste heat into electricity.</span>
-            <span class="face">Converting AI data centre waste heat into electricity.</span>
-          </h1>
+          <h1 id="text15" class="hero__tagline" data-text="Converting AI data centre waste heat into electricity."><span class="face">Converting AI data centre waste heat into electricity.</span></h1>
           <div id="text26" class="prose hero__body reveal"><span class="p">Data centers are the energy infrastructure challenge of our time. Currently, their excess heat is vented as waste. But we see it as a fuel source.</span><span class="p">Our technology will harvest data centre heat as an asset and convert it back into electricity to power each AI data centre more efficiently and sustainably.</span><span class="p">We are building the new standard for energy recovery, from the physics up. <strong>Join us.</strong></span></div>
 
           <div class="hero__cta reveal">
@@ -1943,6 +1938,25 @@
         var navLinks = Array.prototype.slice.call(
           document.querySelectorAll('.primary-nav a, .dot-nav a, .brand')
         );
+
+        /* Hero block sides: 24 copies of the tagline behind its face, each a
+           quarter pixel further down-right and under a thicker veil (see the
+           3D headings notes in head.html). --a follows (k/n)^0.8 so the veil
+           builds quickly next to the face and ends solid at the far edge. */
+        var hero = document.querySelector(".hero__tagline[data-text]");
+        if (hero) {
+          var SIDES = 24;
+          var face = hero.querySelector(".face");
+          for (var k = SIDES; k >= 1; k--) {
+            var side = document.createElement("span");
+            side.className = "side";
+            side.setAttribute("aria-hidden", "true");
+            side.textContent = hero.getAttribute("data-text");
+            side.style.setProperty("--k", String(k));
+            side.style.setProperty("--a", Math.pow(k / SIDES, 0.8).toFixed(3));
+            hero.insertBefore(side, face);
+          }
+        }
 
         /* Side dots: --n (count) on the nav, --i (index) on each item, so the
            CSS turns dot i by i/n of a rotation (see .dot-nav__dot in head.html). */
