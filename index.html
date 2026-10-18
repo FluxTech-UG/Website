@@ -126,6 +126,7 @@
         --header-h: 4rem;
         --radius: 14px;
         --shadow: 0 1px 2px rgba(16, 30, 28, 0.04), 0 8px 28px rgba(16, 30, 28, 0.06);
+        --side-veil-rgb: 10, 20, 30; /* the hero block's sides darken toward this cold dark */
       }
       @media (max-width: 760px) {
         :root {
@@ -593,16 +594,21 @@
         margin-bottom: 1.5rem;
       }
       /* ---- 3D headings ----
-         The hero line and every section title are blocks lifted off the page.
-         The heading's text sits in a .face span that carries the gradient; the
-         block's sides are the ::before pseudo-element behind it, a copy of the
-         text from data-text (the build fills both from the same content key)
-         drawn only as stacked text-shadows stepping down and to the right, the
-         light coming from the upper left. The face is the real text, so a
-         browser without the pseudo still shows the heading. Section titles:
-         two steps, fading, a cast shadow more than a block. Hero line: five
-         solid ink steps and a soft contact shadow, the whole line leaning back
-         nine degrees so the block stands on the page. */
+         The hero line and every section title are blocks lifted off the page,
+         the light coming from the upper left so the sides step down and to the
+         right. The heading's text sits in a .face span that carries the
+         gradient; the face is the real text, so a browser without the extra
+         layers still shows the heading.
+         Section titles: the sides are the ::before pseudo-element behind the
+         face, a copy of the text from data-text (the build fills both from the
+         same content key) drawn only as two fading text-shadow steps, a cast
+         shadow more than a block.
+         Hero line: the sides are six .side spans in the markup (the same key,
+         aria-hidden), each the brand gradient under a veil of cold dark that
+         thickens with depth (--k 1..6, --a the veil's opacity), so every
+         letter's own colour runs into its side and ends blue-black at the far
+         edge; the whole line leans back nine degrees so the block stands on
+         the page. */
       .h-section,
       .hero__tagline {
         position: relative;
@@ -615,10 +621,17 @@
          deepens toward its baseline, the gloss of the logo mark, and the face
          stays bright beside the dark sides. --lh is the class's line-height. */
       .h-section > .face,
+      .hero__tagline > .face,
+      .hero__tagline > .side {
+        display: block;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .h-section > .face,
       .hero__tagline > .face {
         position: relative;
         z-index: 1;
-        display: block;
         background-image:
           linear-gradient(
             180deg,
@@ -630,14 +643,10 @@
           var(--grad);
         background-size: auto var(--lh), auto;
         background-repeat: repeat-y, no-repeat;
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
       }
       .h-section { --lh: 1.15em; }
       .hero__tagline { --lh: 1.12em; }
-      .h-section::before,
-      .hero__tagline::before {
+      .h-section::before {
         content: attr(data-text);
         content: attr(data-text) / "";
         position: absolute;
@@ -656,14 +665,16 @@
         transform: perspective(700px) rotateX(9deg);
         transform-origin: 50% 100%;
       }
-      .hero__tagline::before {
-        text-shadow:
-          1px 1px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
-          2px 2px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
-          3px 3px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
-          4px 4px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
-          5px 5px 0 color-mix(in srgb, var(--c-ink) 92%, transparent),
-          6px 8px 3px rgba(16, 30, 28, 0.18);
+      .hero__tagline > .side {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        user-select: none;
+        transform: translate(calc(var(--k) * 1px), calc(var(--k) * 1px));
+        background-image:
+          linear-gradient(rgba(var(--side-veil-rgb), var(--a)), rgba(var(--side-veil-rgb), var(--a))),
+          var(--grad);
       }
       .prose {
         font-family: var(--font-body);
@@ -1449,7 +1460,15 @@
             width="608"
             height="542"
           />
-          <h1 id="text15" class="hero__tagline" data-text="Converting AI data centre waste heat into electricity."><span class="face">Converting AI data centre waste heat into electricity.</span></h1>
+          <h1 id="text15" class="hero__tagline">
+            <span class="side" aria-hidden="true" style="--k: 6; --a: 1.000">Converting AI data centre waste heat into electricity.</span>
+            <span class="side" aria-hidden="true" style="--k: 5; --a: 0.864">Converting AI data centre waste heat into electricity.</span>
+            <span class="side" aria-hidden="true" style="--k: 4; --a: 0.723">Converting AI data centre waste heat into electricity.</span>
+            <span class="side" aria-hidden="true" style="--k: 3; --a: 0.574">Converting AI data centre waste heat into electricity.</span>
+            <span class="side" aria-hidden="true" style="--k: 2; --a: 0.415">Converting AI data centre waste heat into electricity.</span>
+            <span class="side" aria-hidden="true" style="--k: 1; --a: 0.238">Converting AI data centre waste heat into electricity.</span>
+            <span class="face">Converting AI data centre waste heat into electricity.</span>
+          </h1>
           <div id="text26" class="prose hero__body reveal"><span class="p">Data centers are the energy infrastructure challenge of our time. Currently, their excess heat is vented as waste. But we see it as a fuel source.</span><span class="p">Our technology will harvest data centre heat as an asset and convert it back into electricity to power each AI data centre more efficiently and sustainably.</span><span class="p">We are building the new standard for energy recovery, from the physics up. <strong>Join us.</strong></span></div>
 
           <div class="hero__cta reveal">

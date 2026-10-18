@@ -163,12 +163,14 @@ python build.py --check      # Dry run: validate YAML keys match template placeh
   Poppins/Source Code Pro stacks all live there; this repo adds only site-layout tokens and
   the `var(--c-*)` references that use them.
 - Section headings (`.h-section`) and the hero tagline are 3D blocks: the text sits in a
-  `.face` span with the `background-clip:text` gradient fill, and the heading's `::before`
-  draws the block's sides as stacked `text-shadow` steps from a `data-text` copy of the same
-  content key (the build fills both). Titles get two fading steps; the hero line five solid
-  ink steps, a contact shadow and a nine-degree lean back. A new heading of either kind
-  carries `data-text="{{key}}"` and the `.face` span, or it renders flat. Body text
-  (`.prose`) uses Source Code Pro.
+  `.face` span with the `background-clip:text` gradient fill. A section title's sides are
+  its `::before`, two fading `text-shadow` steps drawn from a `data-text` copy of the same
+  content key (the build fills both), so a new section heading carries
+  `data-text="{{key}}"` and the `.face` span or it renders flat. The hero line's sides are
+  six `.side` spans in `home.html` (the same key, `aria-hidden`, `--k` 1 to 6 and `--a` the
+  veil opacity), each the gradient under a deepening cold-dark veil (`--side-veil-rgb`, a
+  site token), and the line leans back nine degrees. Body text (`.prose`) uses Source Code
+  Pro.
 - All images live in `assets/images/` with descriptive kebab-case names. Every `<img>` carries
   explicit `width`/`height` (intrinsic pixels) so reveals and late media don't cause layout
   shift (CLS).
