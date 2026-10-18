@@ -125,6 +125,11 @@ Reveals fire once via `IntersectionObserver` (then unobserve) and animate only
 `opacity`/`transform`. The `<html>` element gets a `.js` class from a tiny inline script in
 `head.html` before first paint.
 
+Screenshots of this page (`shot`): the input is the file path alone, no `#fragment`. A reveal
+fires only inside the viewport minus its bottom tenth, so a section below the fold is captured
+with `--height` taller than the whole page (15000 px covers it, with `--wait-ms 2500`); a
+`--full-page` capture shows every unrevealed section blank.
+
 The paper-wrinkle texture on every section (`.section::before` in `head.html`) integrates
 the visitor's scrolling within that section: its opacity follows the section's `--paper`
 custom property, which the `closing.html` integrator raises by `0.8 × Σ|Δp|` (p = the section's
