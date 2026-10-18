@@ -88,6 +88,17 @@
         var navLinks = Array.prototype.slice.call(
           document.querySelectorAll('.primary-nav a, .dot-nav a, .brand')
         );
+
+        /* Side dots: --n (count) on the nav, --i (index) on each item, so the
+           CSS turns dot i by i/n of a rotation (see .dot-nav__dot in head.html). */
+        var dotNav = document.querySelector(".dot-nav");
+        if (dotNav) {
+          var dotItems = dotNav.querySelectorAll("li");
+          dotNav.style.setProperty("--n", String(dotItems.length));
+          Array.prototype.forEach.call(dotItems, function (li, i) {
+            li.style.setProperty("--i", String(i));
+          });
+        }
         var primaryNavUl = document.querySelector(".primary-nav ul");
 
         function setActive(id) {

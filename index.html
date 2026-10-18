@@ -368,24 +368,32 @@
         text-decoration: none;
         flex-direction: row-reverse;
       }
+      /* Each dot carries the brand gradient of the Physics & Engineering step
+         numbers, turned by its share of one full rotation: dot i of n is rotated
+         i/n of a turn, so the set always sweeps exactly one rotation however
+         many sections there are. closing.html sets --n on the nav and --i on
+         each item from the DOM; without JS every dot shows the unturned gradient. */
       .dot-nav__dot {
+        --turn: calc(var(--i, 0) / var(--n, 1) * 1turn);
         width: 11px;
         height: 11px;
         flex: 0 0 auto;
         border-radius: 50%;
-        background: #c2cdca;
+        background: var(--grad);
+        opacity: 0.55;
+        transform: rotate(var(--turn));
         box-shadow: 0 0 0 0 rgba(var(--c-green-rgb), 0.25);
         transition:
           transform 0.2s ease,
-          background-color 0.2s ease,
+          opacity 0.2s ease,
           box-shadow 0.2s ease;
       }
       .dot-nav a:hover .dot-nav__dot {
-        background: var(--c-green);
+        opacity: 1;
       }
       .dot-nav a.active .dot-nav__dot {
-        background: var(--c-green);
-        transform: scale(1.65);
+        opacity: 1;
+        transform: rotate(var(--turn)) scale(1.65);
         box-shadow: 0 0 0 4px rgba(var(--c-green-rgb), 0.16);
       }
       .dot-nav__label {
@@ -1806,6 +1814,17 @@
         var navLinks = Array.prototype.slice.call(
           document.querySelectorAll('.primary-nav a, .dot-nav a, .brand')
         );
+
+        /* Side dots: --n (count) on the nav, --i (index) on each item, so the
+           CSS turns dot i by i/n of a rotation (see .dot-nav__dot in head.html). */
+        var dotNav = document.querySelector(".dot-nav");
+        if (dotNav) {
+          var dotItems = dotNav.querySelectorAll("li");
+          dotNav.style.setProperty("--n", String(dotItems.length));
+          Array.prototype.forEach.call(dotItems, function (li, i) {
+            li.style.setProperty("--i", String(i));
+          });
+        }
         var primaryNavUl = document.querySelector(".primary-nav ul");
 
         function setActive(id) {
