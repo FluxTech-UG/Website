@@ -120,7 +120,9 @@ NO_JOBS_LINE = "Nothing to draw: every icon PNG is in place, no shot line to sen
 def icon_to_draw(dest):
     """True when the PNG at ``dest`` is owed: it is missing, or its page
     (``<png>.html``) has a later modification time than it. shot writes the PNG
-    after reading the page, so a drawn PNG is never older than its page."""
+    after reading the page, so a drawn PNG is never older than its page. The
+    test reads file times only: a PNG whose time moved without a draw (a git
+    checkout, a `touch`) reads as drawn; `--icons` draws all nine again."""
     if not os.path.isfile(dest):
         return True
     page = f"{dest}.html"
