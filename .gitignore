@@ -1,0 +1,5 @@
+# The page build.py writes beside each icon PNG for shot to draw; never served.
+assets/images/*.png.html
+
+# Python bytecode from a run or a test.
+__pycache__/
