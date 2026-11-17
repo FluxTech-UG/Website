@@ -18,7 +18,6 @@ import pytest
 import fluxstyle
 
 REPO = Path(__file__).resolve().parent.parent
-HEADING = "shot jobs:"
 
 
 def _site_copy(root):
@@ -48,8 +47,7 @@ def _run(root, monkeypatch, capsys, *flags):
 
 
 def _jobs(lines):
-    assert HEADING in lines, f"no {HEADING!r} line in:\n" + "\n".join(lines)
-    return lines[len(lines) - 1 - lines[::-1].index(HEADING) + 1:]
+    return fluxstyle.read_jobs("\n".join(lines))
 
 
 def test_missing_icons_print_jobs_and_stop_before_index(tmp_path, monkeypatch, capsys):
@@ -95,7 +93,8 @@ def test_icons_flag_lists_all_nine_and_keeps_pngs(tmp_path, monkeypatch, capsys)
 def test_complete_build_writes_the_tracked_index_and_no_jobs(tmp_path, monkeypatch, capsys):
     root = _site_copy(tmp_path / "site")
     lines = _run(root, monkeypatch, capsys)
-    assert lines[-1] == HEADING
+    assert fluxstyle.SHOT_JOBS_HEADING not in lines
+    assert lines[-1] == runpy.run_path(str(REPO / "build.py"))["NO_JOBS_LINE"]
     assert (root / "index.html").read_bytes() == (REPO / "index.html").read_bytes()
     assert not list((root / "assets" / "images").glob("*.png.html"))
 
@@ -106,18 +105,24 @@ def test_html_only_does_what_a_plain_run_does(tmp_path, monkeypatch, capsys):
         root = _site_copy(tmp_path / ("plain" if not flags else "html-only"))
         (root / "assets" / "images" / "icon-heat-modulation.png").unlink()
         lines = _run(root, monkeypatch, capsys, *flags)
+        assert len(_jobs(lines)) == 1
         outs.append([line.replace(str(root.resolve()), "<root>") for line in lines])
     assert outs[0] == outs[1]
-    assert len(_jobs(outs[0])) == 1
 
 
 @pytest.mark.parametrize("bad", ["it's", "a$b", "a`b", "a;b", "a\nb"])
 def test_a_path_with_a_shell_character_is_refused(tmp_path, monkeypatch, capsys, bad):
     root = _site_copy(tmp_path / bad / "site")
     (root / "assets" / "images" / "icon-thermal-capture.png").unlink()
-    with pytest.raises(ValueError, match="build.py refuses the shot path"):
+    with pytest.raises(ValueError, match="fluxstyle's shot job refuses .*Rename the path"):
         _run(root, monkeypatch, capsys)
     assert not list((root / "assets" / "images").glob("*.png.html"))
+
+
+def test_build_keeps_no_jobs_heading_or_refused_characters_of_its_own():
+    source = (REPO / "build.py").read_text(encoding="utf-8")
+    assert fluxstyle.SHOT_JOBS_HEADING not in source
+    assert "SHELL_UNSAFE" not in source
 
 
 def test_an_unknown_flag_is_refused(tmp_path, monkeypatch, capsys):

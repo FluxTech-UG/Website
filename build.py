@@ -6,10 +6,10 @@ Reads content.yaml, assembles section partials from sections/, processes
 markdown-style formatting, and injects content to produce index.html.
 
 It starts no browser and no process: an icon PNG is drawn by the installed
-`shot`, from a page this script writes. Its stdout ends with the line
-`shot jobs:` and then each shot line to send, one per line; none on a complete
-build. While an icon PNG is missing it stops before index.html and names the
-rerun.
+`shot`, from a page this script writes. While an icon PNG is missing it stops
+before index.html, names the rerun and ends its stdout with the jobs block of
+`fluxstyle.print_jobs` (read back by `fluxstyle.read_jobs`); a complete build
+draws nothing and ends with NO_JOBS_LINE instead.
 
 Usage:
     python3 build.py              # Build index.html (or print the missing icons' shot lines)
@@ -112,30 +112,19 @@ ICONS = {
 }
 ICON_PX = 400
 
-
-# Characters a shot line could carry into the shell; a path holding one is refused,
-# never escaped.
-SHELL_UNSAFE = ("'", '"', "$", "`", ";", "\n")
-
-
-def refuse_unsafe_path(path):
-    """Raise ValueError when ``path`` (made absolute) holds a SHELL_UNSAFE character."""
-    path = os.path.abspath(path)
-    bad = sorted({c for c in SHELL_UNSAFE if c in path})
-    if bad:
-        raise ValueError(f"build.py refuses the shot path {path!r}: it holds {bad}; "
-                         "rename the folder or file")
-    return path
+# The last line of a complete build, which has no job to print.
+NO_JOBS_LINE = "Nothing to draw: every icon PNG is in place, no shot line to send."
 
 
 def icon_jobs(force=False):
     """The fluxstyle.ShotJob of every disc icon to draw into assets/images/: the
     missing ones, or with ``force`` (`--icons`, after a fluxstyle change) all nine.
-    Writes each job's page beside its PNG and draws nothing."""
+    Writes each job's page beside its PNG and draws nothing; fluxstyle refuses a
+    path holding a shell character with ValueError before the page is written."""
     dest_dir = os.path.join("assets", "images")
     jobs = []
     for filename, glyph in ICONS.items():
-        dest = refuse_unsafe_path(os.path.join(dest_dir, f"{filename}.png"))
+        dest = os.path.join(dest_dir, f"{filename}.png")
         if force or not os.path.isfile(dest):
             jobs.append(fluxstyle.icon_page(glyph, dest, size=ICON_PX))
     print(f"Icons: {len(jobs)} to draw with shot, {len(ICONS) - len(jobs)} kept.")
@@ -219,13 +208,6 @@ def find_template_placeholders(template):
     return set(re.findall(r'\{\{([^}]+)\}\}', template))
 
 
-def print_shot_jobs(jobs):
-    """The fixed closing block: the heading, then each shot line to send, in order."""
-    print("shot jobs:")
-    for job in jobs:
-        print(job.command)
-
-
 def build(check_only=False, icons=False):
     content = load_content()
     template = inject_brand(load_template())
@@ -267,7 +249,7 @@ def build(check_only=False, icons=False):
     if jobs:
         print(f"Stopped before index.html: {len(jobs)} icon PNGs are to be drawn. Send each "
               "shot line below as its own command, then rerun `python3 build.py`.")
-        print_shot_jobs(jobs)
+        fluxstyle.print_jobs(jobs)
         return
 
     # Build
@@ -282,7 +264,7 @@ def build(check_only=False, icons=False):
         f.write(output)
 
     print("Built index.html successfully.")
-    print_shot_jobs([])
+    print(NO_JOBS_LINE)
 
 
 if __name__ == "__main__":
