@@ -1034,6 +1034,51 @@
       .feature-list .p + .p {
         margin-top: 0;
       }
+      /* A run of rows from one content key: its rows join the list's grid. */
+      .feature-list__run {
+        display: contents;
+      }
+      /* The WIPANO-funded row: the grant's two logos and its acknowledgement.
+         The funder allows scaling only, so the logos sit on plain white with no
+         filter, opacity or blend; flex-shrink in proportion to the bases keeps
+         WIPANO the smaller of the pair at every width. */
+      .funded__logos {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        width: fit-content;
+        max-width: 100%;
+        margin: 1rem 0 0.85rem;
+        padding: 1rem 1.5rem;
+        background: #ffffff;
+        border: 1px solid var(--c-border);
+        border-radius: 8px;
+      }
+      .funded__bmwe {
+        flex: 0 1 11rem;
+        min-width: 0;
+        height: auto;
+      }
+      .funded__wipano {
+        display: block;
+        flex: 0 1 10rem;
+        min-width: 0;
+      }
+      .funded__wipano img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .funded__ack {
+        display: block;
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+      .funded__ack--de {
+        margin-top: 0.4rem;
+        font-size: 0.75rem;
+        color: var(--c-muted);
+      }
       .feature-list mark {
         background: transparent;
         padding: 0;
@@ -1893,7 +1938,36 @@
           <div class="section__body">
           <div id="text-status-lede" class="prose lede reveal"><span class="p"><strong>Building the engine and the science behind it.</strong></span><span class="p">Right now that means three things: preparing our priority patent filing, building the company in the Earlybird Vision Lab, and going deeper on the simulation work that drives the design.</span></div>
           <div id="text-status-intro" class="prose reveal"><strong>The record so far.</strong></div>
-          <div id="text-status-now" class="prose feature-list reveal"><span class="p"><mark>Berlin lab</mark> Research platform running: a travelling-wave thermoacoustic engine, end to end from heat in to electricity out, and the base for every upgrade we build on it.</span><span class="p"><mark>September 2026</mark> Earlybird Vision Lab, cohort 8.</span><span class="p"><mark>October 2026</mark> Federal patent grant (WIPANO) awarded. Priority filing in preparation.</span><span class="p"><mark>2026, open source</mark> <a href="https://github.com/FluxTech-UG/co2-eos">co2-eos</a>, a differentiable CO₂ equation of state in JAX, and <a href="https://github.com/FluxTech-UG/math-dept">math-dept</a>, a machine-checked ledger of the mathematics we rely on.</span></div>
+          <div class="prose feature-list reveal">
+            <div id="text-status-now" class="feature-list__run"><span class="p"><mark>Berlin lab</mark> Research platform running: a travelling-wave thermoacoustic engine, end to end from heat in to electricity out, and the base for every upgrade we build on it.</span><span class="p"><mark>September 2026</mark> Earlybird Vision Lab, cohort 8.</span></div>
+            <div class="p funded">
+              <span id="text-status-wipano"><mark>October 2026</mark> Federal patent grant (WIPANO) awarded. Priority filing in preparation.</span>
+              <!-- WIPANO grant publicity: both logos together, BMWE left, WIPANO right,
+                   complete and unaltered on white, tied to the funded project. -->
+              <div class="funded__logos">
+                <img
+                  class="funded__bmwe"
+                  src="assets/images/BMWE_Fz_Web2x_de.gif"
+                  alt="Gefördert durch: Bundesministerium für Wirtschaft und Energie aufgrund eines Beschlusses des Deutschen Bundestages"
+                  width="340"
+                  height="350"
+                  loading="lazy"
+                />
+                <a class="funded__wipano" href="https://www.wipano.de" target="_blank" rel="noopener">
+                  <img
+                    src="assets/images/Wipano-Logo-800x400.jpg"
+                    alt="WIPANO"
+                    width="800"
+                    height="400"
+                    loading="lazy"
+                  />
+                </a>
+              </div>
+              <span id="text-funding-ack" class="funded__ack">Our priority patent filing (Förderkennzeichen 03TPUBE111) is funded by the Federal Ministry for Economic Affairs and Energy under the WIPANO programme, patenting focus.</span>
+              <span id="text-funding-ack-de" class="funded__ack funded__ack--de" lang="de">Das Projekt mit dem Förderkennzeichen 03TPUBE111 wird mit Mitteln des Bundesministeriums für Wirtschaft und Energie im Förderprogramm WIPANO, Förderschwerpunkt Patentierung, gefördert.</span>
+            </div>
+            <span id="text-status-later" class="p"><mark>2026, open source</mark> <a href="https://github.com/FluxTech-UG/co2-eos">co2-eos</a>, a differentiable CO₂ equation of state in JAX, and <a href="https://github.com/FluxTech-UG/math-dept">math-dept</a>, a machine-checked ledger of the mathematics we rely on.</span>
+          </div>
           <div id="text-status-outro" class="prose reveal">The engine architecture and its control stay private while the filing is prepared. What is general about the work, we publish.</div>
 
           <img

@@ -6,7 +6,36 @@
           <div class="section__body">
           <div id="text-status-lede" class="prose lede reveal">{{text-status-lede}}</div>
           <div id="text-status-intro" class="prose reveal">{{text-status-intro}}</div>
-          <div id="text-status-now" class="prose feature-list reveal">{{text-status-now}}</div>
+          <div class="prose feature-list reveal">
+            <div id="text-status-now" class="feature-list__run">{{text-status-now}}</div>
+            <div class="p funded">
+              <span id="text-status-wipano">{{text-status-wipano}}</span>
+              <!-- WIPANO grant publicity: both logos together, BMWE left, WIPANO right,
+                   complete and unaltered on white, tied to the funded project. -->
+              <div class="funded__logos">
+                <img
+                  class="funded__bmwe"
+                  src="assets/images/BMWE_Fz_Web2x_de.gif"
+                  alt="Gefördert durch: Bundesministerium für Wirtschaft und Energie aufgrund eines Beschlusses des Deutschen Bundestages"
+                  width="340"
+                  height="350"
+                  loading="lazy"
+                />
+                <a class="funded__wipano" href="https://www.wipano.de" target="_blank" rel="noopener">
+                  <img
+                    src="assets/images/Wipano-Logo-800x400.jpg"
+                    alt="WIPANO"
+                    width="800"
+                    height="400"
+                    loading="lazy"
+                  />
+                </a>
+              </div>
+              <span id="text-funding-ack" class="funded__ack">{{text-funding-ack}}</span>
+              <span id="text-funding-ack-de" class="funded__ack funded__ack--de" lang="de">{{text-funding-ack-de}}</span>
+            </div>
+            <span id="text-status-later" class="p">{{text-status-later}}</span>
+          </div>
           <div id="text-status-outro" class="prose reveal">{{text-status-outro}}</div>
 
           <img

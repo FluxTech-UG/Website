@@ -994,6 +994,51 @@
       .feature-list .p + .p {
         margin-top: 0;
       }
+      /* A run of rows from one content key: its rows join the list's grid. */
+      .feature-list__run {
+        display: contents;
+      }
+      /* The WIPANO-funded row: the grant's two logos and its acknowledgement.
+         The funder allows scaling only, so the logos sit on plain white with no
+         filter, opacity or blend; flex-shrink in proportion to the bases keeps
+         WIPANO the smaller of the pair at every width. */
+      .funded__logos {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        width: fit-content;
+        max-width: 100%;
+        margin: 1rem 0 0.85rem;
+        padding: 1rem 1.5rem;
+        background: #ffffff;
+        border: 1px solid var(--c-border);
+        border-radius: 8px;
+      }
+      .funded__bmwe {
+        flex: 0 1 11rem;
+        min-width: 0;
+        height: auto;
+      }
+      .funded__wipano {
+        display: block;
+        flex: 0 1 10rem;
+        min-width: 0;
+      }
+      .funded__wipano img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .funded__ack {
+        display: block;
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+      .funded__ack--de {
+        margin-top: 0.4rem;
+        font-size: 0.75rem;
+        color: var(--c-muted);
+      }
       .feature-list mark {
         background: transparent;
         padding: 0;

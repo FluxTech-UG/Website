@@ -232,8 +232,17 @@ text-status-now: |
 
   ==September 2026== Earlybird Vision Lab, cohort 8.
 
+# The WIPANO row is its own key so the funder's logos and acknowledgement sit in it.
+text-status-wipano: |
   ==October 2026== Federal patent grant (WIPANO) awarded. Priority filing in preparation.
 
+text-funding-ack: |
+  Our priority patent filing (Förderkennzeichen 03TPUBE111) is funded by the Federal Ministry for Economic Affairs and Energy under the WIPANO programme, patenting focus.
+
+text-funding-ack-de: |
+  Das Projekt mit dem Förderkennzeichen 03TPUBE111 wird mit Mitteln des Bundesministeriums für Wirtschaft und Energie im Förderprogramm WIPANO, Förderschwerpunkt Patentierung, gefördert.
+
+text-status-later: |
   ==2026, open source== [co2-eos](https://github.com/FluxTech-UG/co2-eos), a differentiable CO₂ equation of state in JAX, and [math-dept](https://github.com/FluxTech-UG/math-dept), a machine-checked ledger of the mathematics we rely on.
 
 text-status-outro: |
