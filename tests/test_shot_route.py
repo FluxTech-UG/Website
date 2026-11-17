@@ -33,10 +33,19 @@ def _no_process(*args, **kwargs):
     raise AssertionError(f"build.py started a process: {args!r}")
 
 
+# Every call in the os module that starts or replaces a process.
+OS_PROCESS_CALLS = (
+    "system", "fork", "posix_spawn", "posix_spawnp",
+    "execl", "execle", "execlp", "execlpe", "execv", "execve", "execvp", "execvpe",
+    "spawnl", "spawnle", "spawnlp", "spawnlpe", "spawnv", "spawnve", "spawnvp", "spawnvpe",
+)
+
+
 def _run(root, monkeypatch, capsys, *flags):
     for name in ("run", "Popen", "call", "check_call", "check_output"):
         monkeypatch.setattr(subprocess, name, _no_process)
-    monkeypatch.setattr(os, "system", _no_process)
+    for name in OS_PROCESS_CALLS:
+        monkeypatch.setattr(os, name, _no_process)
     monkeypatch.chdir(root)
     monkeypatch.setattr(sys, "argv", ["build.py", *flags])
     try:
@@ -88,6 +97,11 @@ def test_icons_flag_lists_all_nine_and_keeps_pngs(tmp_path, monkeypatch, capsys)
         "icon-economic-compulsion.png", "icon-commercial-validation.png",
         "icon-regulation-mandates.png"]
     assert {p.name: p.read_bytes() for p in images.glob("icon-*.png")} == before
+
+    # No shot line sent: every page is newer than its PNG, so a plain build still owes nine.
+    again = _run(root, monkeypatch, capsys)
+    assert len(_jobs(again)) == 9
+    assert not (root / "index.html").exists()
 
 
 def test_complete_build_writes_the_tracked_index_and_no_jobs(tmp_path, monkeypatch, capsys):

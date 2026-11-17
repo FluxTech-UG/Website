@@ -6,13 +6,14 @@ Reads content.yaml, assembles section partials from sections/, processes
 markdown-style formatting, and injects content to produce index.html.
 
 It starts no browser and no process: an icon PNG is drawn by the installed
-`shot`, from a page this script writes. While an icon PNG is missing it stops
+`shot`, from a page this script writes; an icon is drawn again while its page
+(`<png>.html`) is newer than its PNG. While an icon PNG is owed it stops
 before index.html, names the rerun and ends its stdout with the jobs block of
 `fluxstyle.print_jobs` (read back by `fluxstyle.read_jobs`); a complete build
 draws nothing and ends with NO_JOBS_LINE instead.
 
 Usage:
-    python3 build.py              # Build index.html (or print the missing icons' shot lines)
+    python3 build.py              # Build index.html (or print the owed icons' shot lines)
     python3 build.py --icons      # Print the shot lines for all nine icons (after a fluxstyle change)
     python3 build.py --html-only  # The same as a plain run (the family's callers name the flag)
     python3 build.py --check      # Dry run: validate YAML keys match template placeholders
@@ -116,16 +117,28 @@ ICON_PX = 400
 NO_JOBS_LINE = "Nothing to draw: every icon PNG is in place, no shot line to send."
 
 
+def icon_to_draw(dest):
+    """True when the PNG at ``dest`` is owed: it is missing, or its page
+    (``<png>.html``) has a later modification time than it. shot writes the PNG
+    after reading the page, so a drawn PNG is never older than its page."""
+    if not os.path.isfile(dest):
+        return True
+    page = f"{dest}.html"
+    return os.path.isfile(page) and os.path.getmtime(page) > os.path.getmtime(dest)
+
+
 def icon_jobs(force=False):
-    """The fluxstyle.ShotJob of every disc icon to draw into assets/images/: the
-    missing ones, or with ``force`` (`--icons`, after a fluxstyle change) all nine.
-    Writes each job's page beside its PNG and draws nothing; fluxstyle refuses a
-    path holding a shell character with ValueError before the page is written."""
+    """The fluxstyle.ShotJob of every disc icon to draw into assets/images/: with
+    ``force`` (`--icons`, after a fluxstyle change) all nine, else each icon whose
+    PNG is missing or older than its page (an icon is drawn again while its page
+    is newer than its PNG). Writes each job's page beside its PNG and draws
+    nothing; fluxstyle refuses a path holding a shell character with ValueError
+    before the page is written."""
     dest_dir = os.path.join("assets", "images")
     jobs = []
     for filename, glyph in ICONS.items():
         dest = os.path.join(dest_dir, f"{filename}.png")
-        if force or not os.path.isfile(dest):
+        if force or icon_to_draw(dest):
             jobs.append(fluxstyle.icon_page(glyph, dest, size=ICON_PX))
     print(f"Icons: {len(jobs)} to draw with shot, {len(ICONS) - len(jobs)} kept.")
     return jobs
@@ -273,7 +286,7 @@ if __name__ == "__main__":
     parser.add_argument("--check", action="store_true",
                         help="dry run: validate the keys and the forbidden phrases")
     parser.add_argument("--icons", action="store_true",
-                        help="print the shot lines for all nine icons, not only the missing")
+                        help="print the shot lines for all nine icons, not only the owed")
     parser.add_argument("--html-only", action="store_true",
                         help="accepted for the family's callers; every run is HTML only")
     args = parser.parse_args()
