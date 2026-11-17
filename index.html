@@ -982,6 +982,29 @@
       .partner--heata {
         height: 1.6rem;
       }
+      /* Second row of "Supported by": the WIPANO grant's logo pair on the
+         status block's white panel (.funded__*), centred and a size smaller,
+         with the caption that ties it to the funded project. It sits outside
+         .hero__partners, so the muted opacity, saturate filter and hover lift
+         of the partner marks never reach these two logos. */
+      .hero__funded {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.55rem;
+        max-width: 100%;
+      }
+      .hero__funded .funded__logos {
+        --bmwe-w: 9.5rem;
+        --wipano-w: 8rem;
+        margin: 0;
+        padding: 0.75rem 1.25rem;
+      }
+      .hero__funded-caption {
+        margin: 0;
+        text-align: center;
+        text-wrap: balance;
+      }
       .hero__caption {
         text-align: center;
         /* Wide enough to keep the first sentence on one line; text-wrap:balance
@@ -1055,13 +1078,13 @@
         border-radius: 8px;
       }
       .funded__bmwe {
-        flex: 0 1 11rem;
+        flex: 0 1 var(--bmwe-w, 11rem);
         min-width: 0;
         height: auto;
       }
       .funded__wipano {
         display: block;
-        flex: 0 1 10rem;
+        flex: 0 1 var(--wipano-w, 10rem);
         min-width: 0;
       }
       .funded__wipano img {
@@ -1678,6 +1701,28 @@
                 height="143"
               />
             </a>
+          </div>
+          <!-- WIPANO grant publicity: both logos together, BMWE left, WIPANO right,
+               complete and unaltered on white, tied to the funded project by the caption. -->
+          <div class="hero__funded">
+            <div class="funded__logos">
+              <img
+                class="funded__bmwe"
+                src="assets/images/BMWE_Fz_Web2x_de.gif"
+                alt="Gefördert durch: Bundesministerium für Wirtschaft und Energie aufgrund eines Beschlusses des Deutschen Bundestages"
+                width="340"
+                height="350"
+              />
+              <a class="funded__wipano" href="https://www.wipano.de" target="_blank" rel="noopener">
+                <img
+                  src="assets/images/Wipano-Logo-800x400.jpg"
+                  alt="WIPANO"
+                  width="800"
+                  height="400"
+                />
+              </a>
+            </div>
+            <p id="text-supported-wipano" class="caption hero__funded-caption">Priority patent filing funded under WIPANO, Förderkennzeichen 03TPUBE111.</p>
           </div>
           </div>
           <div class="partner-group" role="group" aria-labelledby="partner-group-deploy">

@@ -242,6 +242,10 @@ text-funding-ack: |
 text-funding-ack-de: |
   Das Projekt mit dem Förderkennzeichen 03TPUBE111 wird mit Mitteln des Bundesministeriums für Wirtschaft und Energie im Förderprogramm WIPANO, Förderschwerpunkt Patentierung, gefördert.
 
+# The caption under the WIPANO logo pair in the hero's "Supported by" group:
+# it ties the logos to the funded project, as the funder requires.
+text-supported-wipano: "Priority patent filing funded under WIPANO, Förderkennzeichen 03TPUBE111."
+
 text-status-later: |
   ==2026, open source== [co2-eos](https://github.com/FluxTech-UG/co2-eos), a differentiable CO₂ equation of state in JAX, and [math-dept](https://github.com/FluxTech-UG/math-dept), a machine-checked ledger of the mathematics we rely on.
 
