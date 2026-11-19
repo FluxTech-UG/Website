@@ -8,9 +8,18 @@ time: the brand-core `:root` tokens (`fluxstyle.brand_css()`, injected at the
 `/* fluxstyle:brand-tokens */` marker in `sections/head.html`), the web-font
 `<link>` (`fluxstyle.font_link_tag()`, at the `<!-- fluxstyle:font-link -->`
 marker), the three logo SVGs (`fluxstyle.logo_path()` → `assets/images/`), and the
-nine disc icons (`fluxstyle.icon_png()` → `assets/images/icon-*.png`; a plain build
-writes only missing ones, `python build.py --icons` rewrites all after a fluxstyle
-change, and needs headless Chromium).
+nine disc icons (`fluxstyle.icon_page()` → `assets/images/icon-*.png`).
+`build.py` starts no browser and no process: for each icon PNG to draw it writes the
+page beside the PNG (`icon-*.png.html`, git-ignored, never served) and prints the
+installed `shot` line that draws it. Its stdout ends with the jobs block of
+`fluxstyle.print_jobs` (read back by `fluxstyle.read_jobs`); a complete build has no
+job and ends with "Nothing to draw: ..." instead. An icon PNG is owed while it is
+missing or its page is newer than it (an icon page newer than its PNG is drawn
+again; the test reads file times only, so a PNG whose time moved without a draw, after
+a git checkout or a `touch`, reads as drawn). While one is owed, a plain build stops
+before `index.html` and names the rerun; `python3 build.py --icons` prints the lines
+for all nine (after a fluxstyle change). Send each line as its own command, then rerun
+`python3 build.py`.
 Don't hand-edit any of those: change the brand in `fluxstyle` and rebuild. Only
 site-layout tokens (`--maxw`, `--header-h`, `--radius`, `--shadow`, `--measure`)
 stay local. Build needs fluxstyle installed: `pip install -e ../../fluxstyle`.
@@ -38,6 +47,9 @@ flux-tech.de/
 │   └── closing.html       # Closes </main>, site footer + credits, back-to-top, shared video
 │                          #   lightbox, and ALL the page JS (scroll-spy, reveal, nav, etc.)
 ├── index.html             # Built output, served by GitHub Pages. NEVER edit directly
+├── tests/
+│   └── test_shot_route.py # build.py starts no process; the shot lines it prints
+├── .gitignore             # The icon pages (assets/images/*.png.html) and __pycache__/
 └── assets/
     └── images/            # Logo, headshots, IEA chart, partner logos, icons, diagrams
 ```
@@ -148,10 +160,13 @@ matching placeholder (and errors on orphaned placeholders).
 ## Commands
 
 ```bash
-python build.py              # Build index.html from sections + content
-python build.py --check      # Dry run: validate YAML keys match template placeholders
-                             # and block copy holding a FORBIDDEN_PHRASES entry (build.py):
-                             # patent wording that is false until the filing exists
+python3 build.py              # Build index.html, or print the jobs block of the icons to draw
+python3 build.py --icons      # The shot lines for all nine icons (after a fluxstyle change)
+python3 build.py --html-only  # The same as a plain run (the family's callers name the flag)
+python3 build.py --check      # Dry run: validate YAML keys match template placeholders
+                              # and block copy holding a FORBIDDEN_PHRASES entry (build.py):
+                              # patent wording that is false until the filing exists
+python3 -m pytest tests -q    # The build's tests (no process started, the shot lines checked)
 ```
 
 ## Conventions
