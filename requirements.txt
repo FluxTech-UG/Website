@@ -1,9 +1,6 @@
-# Dependencies for `python3 build.py` and its tests (the site itself is static
+# Dependencies for `python3 build.py` (the site itself is static
 # HTML; nothing here ships to GitHub Pages).
 PyYAML>=6.0
-
-# The build's tests (`python3 -m pytest tests -q`); the build itself does not import it.
-pytest
 
 # fluxstyle: brand tokens, web-font request, and logo SVGs, pulled at build time.
 # Private package; install editable from the sibling repo. Run from this directory:

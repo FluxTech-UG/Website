@@ -47,8 +47,6 @@ flux-tech.de/
 │   └── closing.html       # Closes </main>, site footer + credits, back-to-top, shared video
 │                          #   lightbox, and ALL the page JS (scroll-spy, reveal, nav, etc.)
 ├── index.html             # Built output, served by GitHub Pages. NEVER edit directly
-├── tests/
-│   └── test_shot_route.py # build.py starts no process; the shot lines it prints
 ├── .gitignore             # The icon pages (assets/images/*.png.html) and __pycache__/
 └── assets/
     └── images/            # Logo, headshots, IEA chart, partner logos, icons, diagrams
@@ -166,7 +164,6 @@ python3 build.py --html-only  # The same as a plain run (the family's callers na
 python3 build.py --check      # Dry run: validate YAML keys match template placeholders
                               # and block copy holding a FORBIDDEN_PHRASES entry (build.py):
                               # patent wording that is false until the filing exists
-python3 -m pytest tests -q    # The build's tests (no process started, the shot lines checked)
 ```
 
 ## Conventions
